@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="267dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginBottom="400dp"
         android:text="TextView"
@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Shoping With Less Effort" />
+        app:layout_constraintVertical_bias="0.316"
+        tools:text="Shopping With Less Effort" />
 
     <Button
         android:id="@+id/button"
@@ -31,4 +32,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.511"
         tools:text="Start" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Caleb was here"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="559dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
