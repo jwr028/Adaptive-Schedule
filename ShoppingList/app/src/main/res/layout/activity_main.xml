@@ -9,19 +9,14 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="121dp"
-        android:layout_marginEnd="53dp"
+        android:layout_marginTop="145dp"
         android:layout_marginBottom="400dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        tools:text="Shopping With Less Effort" />
+        android:text="SWLE"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/button"
