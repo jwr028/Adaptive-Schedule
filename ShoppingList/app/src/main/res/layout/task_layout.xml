@@ -14,7 +14,7 @@
         android:padding="8dp">
 
         <CheckBox
-            android:id="@+id/todoCheckBox"
+            android:id="@+id/listCheckBox"
             android:layout_width="371dp"
             android:layout_height="wrap_content"
             android:buttonTint="@android:color/holo_green_dark"

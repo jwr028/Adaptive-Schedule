@@ -13,5 +13,20 @@ public class ListsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
+
+        Button button = (Button) findViewById(R.id.newListButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateListActivity();
+            }
+        });
+
+    }
+    // button function to move to CreateList screen
+    public void openCreateListActivity() {
+        Intent intent = new Intent(this, CreateListActivity.class);
+        startActivity(intent);
+
     }
 }

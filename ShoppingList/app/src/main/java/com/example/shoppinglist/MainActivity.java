@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.button);
+        Button button = (Button) findViewById(R.id.startButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        }
+    }
+    // button function to move to CreateList screen
     public void openListsActivity() {
         Intent intent = new Intent(this, ListsActivity.class);
         startActivity(intent);
