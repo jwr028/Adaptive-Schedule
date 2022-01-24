@@ -1,6 +1,6 @@
 package com.example.shoppinglist.Model;
 
-public class listModel {
+public class ToDoModel {
     private int id, status;
     private String task;
 
@@ -27,6 +27,4 @@ public class listModel {
     public void setTask(String task) {
         this.task = task;
     }
-
-
 }
