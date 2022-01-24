@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="20dp"
-        android:text="New List (does nothing atm)" />
+        android:text="New List!" />
 
     <ScrollView
         android:layout_width="wrap_content"

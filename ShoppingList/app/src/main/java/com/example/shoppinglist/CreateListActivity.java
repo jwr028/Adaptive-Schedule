@@ -40,7 +40,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_create_list);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         db = new DatabaseHandler(this);
