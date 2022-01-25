@@ -11,10 +11,15 @@
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/drawable/ic_baseline_edit.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/activity_create.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/activity_create_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/activity_lists.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/activity_main_list_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_create.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_create_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_item_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_scrolling.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/new_task.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/task_layout.xml" value="0.35260416666666666" />
       </map>
