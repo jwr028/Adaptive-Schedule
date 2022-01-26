@@ -33,7 +33,8 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
     private RecyclerView tasksRecyclerView;
     private ToDoAdapter tasksAdapter;
-    private FloatingActionButton fab;
+    private FloatingActionButton addTaskButton;
+    private FloatingActionButton addItemButton;
 
     private List<ToDoModel> taskList;
 
@@ -55,14 +56,24 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
                 ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
-        fab = findViewById(R.id.fab);
+        addTaskButton = findViewById(R.id.addTask);
+        addItemButton = findViewById(R.id.addItem);
 
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
 
         tasksAdapter.setTasks(taskList);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        // ADD TASK BUTTON
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+            }
+        });
+
+        // ADD ITEM BUTTON
+        addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);

@@ -11,4 +11,9 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">@android:color/holo_green_dark</color>
     <color name="colorAccent">#000000</color>
+
+    <color name="YellowDark">#c6a700</color>
+    <color name="YellowLight">#ffff6b</color>
+    <color name="GreyDark">#8d8d8d</color>
+    <color name="GreyLight">#efefef</color>
 </resources>
