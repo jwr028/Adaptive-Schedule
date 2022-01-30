@@ -23,6 +23,7 @@ public class ListsActivity extends AppCompatActivity {
         });
 
     }
+
     // button function to move to CreateList screen
     public void openCreateListActivity() {
         Intent intent = new Intent(this, CreateListActivity.class);

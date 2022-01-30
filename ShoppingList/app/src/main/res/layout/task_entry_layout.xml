@@ -32,6 +32,9 @@
         android:id="@+id/taskText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="TextView" />
+        android:background="@android:color/darker_gray"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="16sp" />
 
 </androidx.cardview.widget.CardView>

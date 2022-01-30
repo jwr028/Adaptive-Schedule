@@ -12,6 +12,8 @@ import com.example.shoppinglist.Model.ToDoModel;
 import java.util.ArrayList;
 import java.util.List;
 
+// Need to watch a database tutorial or somtin to add more variables properly
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
@@ -20,8 +22,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
+    private static final String TYPE = "type"; // used to determine if item or task
     private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, "
-            + STATUS + " INTEGER)";
+            + STATUS + " INTEGER" + TYPE + " TYPE" +")";
+    // table is probably strict on declarations ^^^
 
     private SQLiteDatabase db;
 
@@ -66,6 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                        //task.setType(cur.getString(cur.getColumnIndex(TYPE)));
                         taskList.add(task);
                     }
                     while(cur.moveToNext());

@@ -25,7 +25,7 @@ import com.example.shoppinglist.Utils.DatabaseHandler;
 
 import java.util.Objects;
 
-public class AddNewTask extends BottomSheetDialogFragment {
+public class AddNewItem extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
@@ -33,8 +33,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
     private DatabaseHandler db;
 
-    public static AddNewTask newInstance(){
-        return new AddNewTask();
+    public static AddNewItem newInstance(){
+        return new AddNewItem();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     // inserting the info for database
                     task.setTask(text);
                     task.setStatus(0);
-                    task.setType("task"); //used to distinguish items and tasks
+                    task.setType("item"); // used to distinguish items and tasks
 
                     db.insertTask(task);
                 }

@@ -68,7 +68,9 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+
             }
         });
 
@@ -76,7 +78,9 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                // duplicated the code for new task to separate new task and item
+                AddNewItem.newInstance().show(getSupportFragmentManager(), AddNewItem.TAG);
+
             }
         });
     }
