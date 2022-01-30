@@ -16,6 +16,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
+    // DECLARE DATA HERE
     private static final int VERSION = 1;
     private static final String NAME = "toDoListDatabase";
     private static final String TODO_TABLE = "todo";
@@ -24,7 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String STATUS = "status";
     private static final String TYPE = "type"; // used to determine if item or task
     private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, "
-            + STATUS + " INTEGER" + TYPE + " TYPE" +")";
+            + STATUS + " INTEGER," + TYPE + " TEXT" + ")";
     // table is probably strict on declarations ^^^
 
     private SQLiteDatabase db;
@@ -50,10 +51,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
+    // need to "PUT" NEW DATA HERE
     public void insertTask(ToDoModel task){
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
+        cv.put(TYPE, task.getType());
         db.insert(TODO_TABLE, null, cv);
     }
 
@@ -66,11 +69,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if(cur != null){
                 if(cur.moveToFirst()){
                     do{
+                        // need to "SET" new data here
                         ToDoModel task = new ToDoModel();
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
-                        //task.setType(cur.getString(cur.getColumnIndex(TYPE)));
+
+                        //task.setType(cur.getString(cur.getColumnIndex(TYPE))); // this doesn't work for some reason
+
                         taskList.add(task);
                     }
                     while(cur.moveToNext());
