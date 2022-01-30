@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.shoppinglist.Utils.DataBaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.shoppinglist.Adapter.ToDoAdapter;
@@ -29,7 +30,7 @@ import java.util.Objects;
 
 public class CreateListActivity extends AppCompatActivity implements DialogCloseListener{
 
-    private DatabaseHandler db;
+    private DataBaseHelper db;
 
     private RecyclerView tasksRecyclerView;
     private ToDoAdapter tasksAdapter;
@@ -44,8 +45,8 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
         setContentView(R.layout.activity_create_list);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        db = new DatabaseHandler(this);
-        db.openDatabase();
+        db = new DataBaseHelper(this);
+        //db.openDatabase(); database should only be opened within db methods?
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));

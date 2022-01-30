@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.example.shoppinglist.Utils.DataBaseHelper;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import com.example.shoppinglist.Adapter.ToDoAdapter;
@@ -31,7 +32,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private EditText newTaskText;
     private Button newTaskSaveButton;
 
-    private DatabaseHandler db;
+    private DataBaseHelper db;
 
     public static AddNewTask newInstance(){
         return new AddNewTask();
@@ -72,7 +73,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimaryDark));
         }
 
-        db = new DatabaseHandler(getActivity());
+        db = new DataBaseHelper(getActivity());
         db.openDatabase();
 
         // code to enable and change save button color when task has text entered
@@ -98,7 +99,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         });
 
-        // write data to database?
+        // EDITING AN ENTRY
         final boolean finalIsUpdate = isUpdate;
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override

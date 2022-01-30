@@ -17,6 +17,7 @@ import com.example.shoppinglist.CreateListActivity;
 import com.example.shoppinglist.AddNewTask;
 import com.example.shoppinglist.Model.ToDoModel;
 import com.example.shoppinglist.R;
+import com.example.shoppinglist.Utils.DataBaseHelper;
 import com.example.shoppinglist.Utils.DatabaseHandler;
 
 import java.util.List;
@@ -24,10 +25,10 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     private List<ToDoModel> todoList;
-    private DatabaseHandler db;
+    private DataBaseHelper db;
     private CreateListActivity activity;
 
-    public ToDoAdapter(DatabaseHandler db, CreateListActivity activity) {
+    public ToDoAdapter(DataBaseHelper db, CreateListActivity activity) {
         this.db = db;
         this.activity = activity;
     }
