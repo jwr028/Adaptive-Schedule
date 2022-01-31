@@ -1,9 +1,9 @@
 package com.example.shoppinglist.Model;
 
-// holds info for items and tasks in list when creating list
+// holds info for list objects
 
 public class ToDoModel {
-    private int id, status;
+    private int id, parentID, status;
     private String task; // entry text
     private String type; // for distinguishing between shop items and tasks
 
@@ -13,6 +13,13 @@ public class ToDoModel {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getParentID() {
+        return parentID;
+    }
+    public void setParentID(int parentID) {
+        this.parentID = parentID;
     }
 
     public int getStatus() {
