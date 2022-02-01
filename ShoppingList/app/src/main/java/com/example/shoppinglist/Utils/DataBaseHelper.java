@@ -29,7 +29,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_STATUS = "STATUS";
     public static final String COL_TYPE = "TYPE";
 
-    private SQLiteDatabase db;
+    public static SQLiteDatabase db;
 
     // Constructor
     public DataBaseHelper(@Nullable Context context) {
@@ -191,5 +191,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.delete(PARENT_TABLE_NAME, LIST_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
+    //public static void clearDatabase() {
+
+    //    db.delete(TABLE_NAME,null,null);
+    //    db.delete(PARENT_TABLE_NAME,null,null);
+    //    db.close();
+    //}
 }
 

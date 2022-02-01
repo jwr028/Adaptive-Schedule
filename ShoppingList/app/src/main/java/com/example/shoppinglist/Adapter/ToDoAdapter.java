@@ -33,16 +33,36 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         this.activity = activity;
     }
 
+    // override of viewtype needed to display different color layout for respective type of entry
+    @Override //add this method to your adapter
+    public int getItemViewType(int position) {
+        final ToDoModel item = todoList.get(position);
+        if(item.getType().toString().equals("task")){
+            return 1; // blue layout
+        }else{
+            //System.out.println(); lol
+            return 2; // green layout
+        }
+    }
+
     // (Caleb) here I replaced task_layout with task_entry_layout
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        //View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout, parent, false);
         // need to distinguish layouts with respective colors
+        if (viewType == 1) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_blue, parent, false);
+            return new ViewHolder(itemView);
+        }
+        else {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
+            return new ViewHolder(itemView);
+        }
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout, parent, false);
 
-
-        return new ViewHolder(itemView);
+        //return new ViewHolder(itemView);
     }
 
     @Override
@@ -51,6 +71,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
         final ToDoModel item = todoList.get(position);
         holder.task.setText(item.getTask());
+
         //holder.task.setChecked(toBoolean(item.getStatus()));
         /**
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
