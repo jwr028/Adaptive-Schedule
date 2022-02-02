@@ -2,6 +2,8 @@ package com.example.shoppinglist.Utils;
 
 // this is a database that I copypasted, going to duplicate it and rebuild it to fit project (DataBaseHelper)
 
+// THIS IS NOT USED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

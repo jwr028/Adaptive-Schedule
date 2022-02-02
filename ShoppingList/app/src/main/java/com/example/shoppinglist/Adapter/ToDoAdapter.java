@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shoppinglist.CreateListActivity;
 
 import com.example.shoppinglist.AddNewTask;
+import com.example.shoppinglist.AddNewItem;
+
 import com.example.shoppinglist.Model.ToDoModel;
 import com.example.shoppinglist.R;
 import com.example.shoppinglist.Utils.DataBaseHelper;
-import com.example.shoppinglist.Utils.DatabaseHandler;
+//import com.example.shoppinglist.Utils.DatabaseHandler;
 
 import java.util.List;
 
@@ -117,9 +119,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
         bundle.putString("task", item.getTask());
-        AddNewTask fragment = new AddNewTask();
-        fragment.setArguments(bundle);
-        fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
+
+        // code to change color of "SAVE" when editing to match task or item
+        if (item.getType().equals("task")) {
+            AddNewTask fragment = new AddNewTask();
+            fragment.setArguments(bundle);
+            fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
+        } else {
+            AddNewItem fragment = new AddNewItem();
+            fragment.setArguments(bundle);
+            fragment.show(activity.getSupportFragmentManager(), AddNewItem.TAG);
+        }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

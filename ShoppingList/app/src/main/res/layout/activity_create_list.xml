@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tasksText"
+    <EditText
+        android:id="@+id/listName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -21,7 +21,7 @@
         android:id="@+id/tasksRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tasksText"
+        android:layout_below="@id/listName"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:nestedScrollingEnabled="true" />
 
@@ -55,7 +55,7 @@
 
     <!-- Button to confirm and save list (and start sorting and searching?)-->
     <Button
-        android:id="@+id/button"
+        android:id="@+id/finishButton"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.Utils.DataBaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -34,8 +37,10 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
     private RecyclerView tasksRecyclerView;
     private ToDoAdapter tasksAdapter;
+    private EditText listName;
     private FloatingActionButton addTaskButton;
     private FloatingActionButton addItemButton;
+    private Button finishButton;
 
     private List<ToDoModel> taskList;
 
@@ -59,8 +64,10 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
         addTaskButton = findViewById(R.id.addTask);
         addItemButton = findViewById(R.id.addItem);
+        listName = findViewById(R.id.listName);
+        finishButton = findViewById(R.id.finishButton);
 
-        taskList = db.getAllTasks();
+        taskList = db.getAllNewTasks(); // will need to change this once lists are saved properly
         Collections.reverse(taskList);
 
         tasksAdapter.setTasks(taskList);
@@ -84,11 +91,48 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
             }
         });
+
+        // FINISH LIST BUTTON
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // need code here to add LIST NAME to parent database before finishing and returning to List Activity screen
+                String text = listName.getText().toString(); // fetches edittext and sets as name in database
+
+                // inserting a new list
+                ParentToDoModel list = new ParentToDoModel();
+                // inserting the info for database
+                list.setName(text);
+
+                db.insertList(list);
+
+                // need to set ID of new list to parentID of all list items currently displayed
+
+                int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
+
+                int i = 0;
+                while (i < taskList.size()){
+
+                    taskList.get(i).setAge(1); // set age of each item in current display list to 1
+                    db.updateAge(taskList.get(i).getId(),1); // update database items with age of 1
+
+                    taskList.get(i).setParentID(newListID); // update list items parentID
+                    db.updateParent(taskList.get(i).getId(),newListID); // attaches new entry items to parent list in DB
+
+                    i++;
+                }
+
+
+                finish(); // end activity
+
+
+            }
+        });
     }
 
     @Override
     public void handleDialogClose(DialogInterface dialog){
-        taskList = db.getAllTasks();
+        taskList = db.getAllNewTasks(); // needs to be getAllNEWTasks
         Collections.reverse(taskList);
         tasksAdapter.setTasks(taskList);
         tasksAdapter.notifyDataSetChanged();

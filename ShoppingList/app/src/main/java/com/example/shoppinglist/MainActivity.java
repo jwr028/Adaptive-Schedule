@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     // button function to move to Lists screen
