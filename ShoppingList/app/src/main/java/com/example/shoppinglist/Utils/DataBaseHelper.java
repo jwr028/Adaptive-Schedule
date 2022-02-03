@@ -253,7 +253,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public int getLastInsert(){
         SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
-        String queryString = "SELECT last_insert_rowid()";
+        String queryString = "SELECT last_insert_rowid()"; // SQlite command to fetch ID of most recent INSERT
         Cursor cursor = db.rawQuery(queryString,null);
         if (cursor.moveToFirst()){
             int lastInsertID = cursor.getInt(0);

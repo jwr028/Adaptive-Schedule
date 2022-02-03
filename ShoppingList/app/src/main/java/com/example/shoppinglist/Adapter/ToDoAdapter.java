@@ -24,6 +24,8 @@ import com.example.shoppinglist.Utils.DataBaseHelper;
 
 import java.util.List;
 
+// used for the recycler view in createListActivity
+
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     private List<ToDoModel> todoList;

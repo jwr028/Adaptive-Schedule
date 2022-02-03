@@ -14,15 +14,22 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Adapter.ToDoAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private ToDoAdapter adapter;
+    private ListToDoAdapter listAdapter;
 
     public RecyclerItemTouchHelper(ToDoAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
+    }
+    //  add another constructor? (will delete if causes issues)
+    public RecyclerItemTouchHelper(ListToDoAdapter listAdapter) {
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        this.listAdapter = listAdapter;
     }
 
 

@@ -48,18 +48,18 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        Objects.requireNonNull(getSupportActionBar()).hide(); // this is the command to remove the name of the app at the top??
 
         db = new DataBaseHelper(this);
         //db.openDatabase(); database should only be opened within db methods?
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         tasksAdapter = new ToDoAdapter(db,CreateListActivity.this);
         tasksRecyclerView.setAdapter(tasksAdapter);
 
-        ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         addTaskButton = findViewById(R.id.addTask);
@@ -67,12 +67,12 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
         listName = findViewById(R.id.listName);
         finishButton = findViewById(R.id.finishButton);
 
-        taskList = db.getAllNewTasks(); // will need to change this once lists are saved properly
-        Collections.reverse(taskList);
-
+        // fetches items and displays them
+        taskList = db.getAllNewTasks();
+        Collections.reverse(taskList); // newest on top
         tasksAdapter.setTasks(taskList);
 
-        // ADD TASK BUTTON
+        // ADD TASK BUTTON FUNCTION
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +82,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
             }
         });
 
-        // ADD ITEM BUTTON
+        // ADD ITEM BUTTON FUNCTION
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
             }
         });
 
-        // FINISH LIST BUTTON
+        // FINISH LIST BUTTON FUNCTION
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
