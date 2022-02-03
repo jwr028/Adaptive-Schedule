@@ -105,10 +105,10 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
                 list.setName(text);
 
                 db.insertList(list);
-
+                // need to pull ID here?
                 // need to set ID of new list to parentID of all list items currently displayed
-
-                int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
+                //int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
+                int newListID = db.getLastInsert(); // method uses last_insert_rowid in SQlite
 
                 int i = 0;
                 while (i < taskList.size()){
@@ -122,9 +122,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
                     i++;
                 }
 
-
                 finish(); // end activity
-
 
             }
         });

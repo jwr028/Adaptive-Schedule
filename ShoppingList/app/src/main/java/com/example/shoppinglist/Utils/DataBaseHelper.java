@@ -18,13 +18,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     // these are the column names for the list of lists table
     public static final String PARENT_TABLE_NAME = "LIST_OF_LISTS";
-    public static final String LIST_ID = "ID";
+    public static final String LIST_ID = "ID"; // PRIMARY KEY
     public static final String LIST_NAME = "NAME";
 
     // these are the column names for the list item table
     public static final String TABLE_NAME = "LIST_TABLE";
-    public static final String PARENT_ID = "PARENT_ID"; // used for linking item lists to main list of lists
-    public static final String COL_ID = "ID"; // ID for items
+    public static final String PARENT_ID = "PARENT"; // FOREIGN KEY
+    public static final String COL_ID = "ID"; // PRIMARY KEY
     public static final String COL_TASK = "TASK";
     public static final String COL_STATUS = "STATUS";
     public static final String COL_TYPE = "TYPE";
@@ -49,7 +49,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // this will probably not be called in onCreate since we need a new one every time a new list is made
         // string to cast command to SQL to create database for an individual list
         String createTableStatement = "CREATE TABLE " + TABLE_NAME + " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + PARENT_ID + " INTEGER, " + COL_TASK + " TEXT, " + COL_STATUS + " INTEGER, " + COL_TYPE + " TEXT, " + COL_AGE + " INTEGER " + ")";
+                 + COL_TASK + " TEXT, " + COL_STATUS + " INTEGER, " + COL_TYPE + " TEXT, " + COL_AGE + " INTEGER, "
+                + PARENT_ID + " INTEGER, " + " FOREIGN KEY " + "(" +PARENT_ID+ ")" + " REFERENCES " + PARENT_TABLE_NAME + "(" + LIST_ID + ")" + ")";
 
         db.execSQL(createTableStatement);
     }
@@ -142,11 +143,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // loop through results and create new objects then return them as list
             do {
                 int taskID = cursor.getInt(0);
-                int parentID = cursor.getInt(1);
-                String taskText = cursor.getString(2);
-                int taskStatus = cursor.getInt(3);
-                String taskType = cursor.getString(4);
-                int taskAge = cursor.getInt(5);
+                String taskText = cursor.getString(1);
+                int taskStatus = cursor.getInt(2);
+                String taskType = cursor.getString(3);
+                int taskAge = cursor.getInt(4);
+                int parentID = cursor.getInt(5);
 
                 ToDoModel newTask = new ToDoModel();
 
@@ -185,20 +186,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // loop through results and create new objects then return them as list
             do {
                 int taskID = cursor.getInt(0);
-                int parentID = cursor.getInt(1);
-                String taskText = cursor.getString(2);
-                int taskStatus = cursor.getInt(3);
-                String taskType = cursor.getString(4);
-                int taskAge = cursor.getInt(5);
+                String taskText = cursor.getString(1);
+                int taskStatus = cursor.getInt(2);
+                String taskType = cursor.getString(3);
+                int taskAge = cursor.getInt(4);
+                int parentID = cursor.getInt(5);
 
                 ToDoModel newTask = new ToDoModel();
 
                 newTask.setId(taskID);
-                newTask.setParentID(parentID);
                 newTask.setTask(taskText);
                 newTask.setStatus(taskStatus);
                 newTask.setType(taskType);
                 newTask.setAge(taskAge);
+                newTask.setParentID(parentID);
 
                 taskList.add(newTask);
 
@@ -250,11 +251,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.delete(PARENT_TABLE_NAME, LIST_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
-    //public static void clearDatabase() {
+    public int getLastInsert(){
+        SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
+        String queryString = "SELECT last_insert_rowid()";
+        Cursor cursor = db.rawQuery(queryString,null);
+        if (cursor.moveToFirst()){
+            int lastInsertID = cursor.getInt(0);
+            return lastInsertID;
+        } else {
+            return 0;
+        }
 
-    //    db.delete(TABLE_NAME,null,null);
-    //    db.delete(PARENT_TABLE_NAME,null,null);
-    //    db.close();
-    //}
+    }
 }
 
