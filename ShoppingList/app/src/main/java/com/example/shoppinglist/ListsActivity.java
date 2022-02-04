@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import com.example.shoppinglist.Utils.DataBaseHelper;
 import java.util.Collections;
 import java.util.List;
 
-public class ListsActivity extends AppCompatActivity {
+public class ListsActivity extends AppCompatActivity implements DialogCloseListener{
 
     private DataBaseHelper db;
 
@@ -43,7 +44,7 @@ public class ListsActivity extends AppCompatActivity {
         listsAdapter = new ListToDoAdapter(db,ListsActivity.this);
         listsRecyclerView.setAdapter(listsAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(listsAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelperLists(listsAdapter));
         itemTouchHelper.attachToRecyclerView(listsRecyclerView);
 
         newListButton = findViewById(R.id.newListButton);
@@ -67,6 +68,13 @@ public class ListsActivity extends AppCompatActivity {
     public void openCreateListActivity() {
         Intent intent = new Intent(this, CreateListActivity.class);
         startActivity(intent);
+    }
 
+    @Override
+    public void handleDialogClose(DialogInterface dialog){
+        listOfLists = db.getAllLists(); // refreshing Lists from database
+        Collections.reverse(listOfLists);
+        listsAdapter.setLists(listOfLists);
+        listsAdapter.notifyDataSetChanged();
     }
 }

@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.ListsActivity;
 
-import com.example.shoppinglist.AddNewTask;
-import com.example.shoppinglist.AddNewItem;
+import com.example.shoppinglist.EditListName;
 
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.R;
@@ -94,15 +93,17 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
         notifyItemRemoved(position);
     }
 
+    // does not work yet
     public void editNameOfList(int position) {
         ParentToDoModel list = listOfLists.get(position);
         Bundle bundle = new Bundle();
+        bundle.putInt("id", list.getId());
         bundle.putString("name", list.getName());
 
         // might need to add new fragment to replace this one
-        AddNewTask fragment = new AddNewTask();
+        EditListName fragment = new EditListName();
         fragment.setArguments(bundle);
-        fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
+        fragment.show(activity.getSupportFragmentManager(), EditListName.TAG);
 
     }
 

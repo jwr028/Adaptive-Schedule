@@ -94,6 +94,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         else {return true;}
     }
 
+    // used on main list activity
     public List<ParentToDoModel> getAllLists(){
 
         List<ParentToDoModel> parentList = new ArrayList<>();
@@ -128,7 +129,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return parentList;
     }
 
-    // used to fetch all items for a selected list
+    // used to fetch all items (probably not used)
     public List<ToDoModel> getAllTasks(){
 
         List<ToDoModel> taskList = new ArrayList<>();
@@ -243,12 +244,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, cv, COL_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
+    public void updateListName(int id, String name) {
+        ContentValues cv = new ContentValues();
+        cv.put(LIST_NAME, name);
+        db.update(PARENT_TABLE_NAME, cv, LIST_ID + "= ?", new String[] {String.valueOf(id)});
+    }
+
     public void deleteTask(int id){
         db.delete(TABLE_NAME, COL_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
     public void deleteList(int id){
         db.delete(PARENT_TABLE_NAME, LIST_ID + "= ?", new String[] {String.valueOf(id)});
+        // need to add code to delete all task entries with same parent ID
+        db.delete(TABLE_NAME, PARENT_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
     public int getLastInsert(){

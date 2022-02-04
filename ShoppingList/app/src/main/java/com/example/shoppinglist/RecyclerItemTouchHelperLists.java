@@ -17,21 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Adapter.ToDoAdapter;
 
-public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
+// class used for handling swiping on main list activity
+public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback {
 
-    private ToDoAdapter adapter;
-    //private ListToDoAdapter listAdapter;
+    //private ToDoAdapter adapter;
+    private ListToDoAdapter listAdapter;
 
-    public RecyclerItemTouchHelper(ToDoAdapter adapter) {
-        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-        this.adapter = adapter;
-    }
-    //  add another constructor? (will delete if causes issues)
-    //public RecyclerItemTouchHelper(ListToDoAdapter listAdapter) {
+    //public RecyclerItemTouchHelper(ToDoAdapter adapter) {
     //    super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-    //    this.listAdapter = listAdapter;
+    //    this.adapter = adapter;
     //}
-
+    //  add another constructor? (will delete if causes issues)
+    public RecyclerItemTouchHelperLists(ListToDoAdapter listAdapter) {
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        this.listAdapter = listAdapter;
+    }
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -42,26 +42,26 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAdapterPosition();
         if (direction == ItemTouchHelper.LEFT) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(listAdapter.getContext());
             builder.setTitle("Delete Task");
-            builder.setMessage("Are you sure you want to delete this Task?");
+            builder.setMessage("Are you sure you want to delete this List?");
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            adapter.deleteItem(position);
+                            listAdapter.deleteList(position);
                         }
                     });
             builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
                 }
             });
             AlertDialog dialog = builder.create();
             dialog.show();
         } else {
-            adapter.editItem(position);
+            listAdapter.editNameOfList(position);
         }
     }
 
@@ -76,10 +76,10 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         int backgroundCornerOffset = 20;
 
         if (dX > 0) {
-            icon = ContextCompat.getDrawable(adapter.getContext(), R.drawable.ic_baseline_edit);
-            background = new ColorDrawable(ContextCompat.getColor(adapter.getContext(), R.color.colorPrimaryDark));
+            icon = ContextCompat.getDrawable(listAdapter.getContext(), R.drawable.ic_baseline_edit);
+            background = new ColorDrawable(ContextCompat.getColor(listAdapter.getContext(), R.color.colorPrimaryDark));
         } else {
-            icon = ContextCompat.getDrawable(adapter.getContext(), R.drawable.ic_baseline_delete);
+            icon = ContextCompat.getDrawable(listAdapter.getContext(), R.drawable.ic_baseline_delete);
             background = new ColorDrawable(Color.RED);
         }
 

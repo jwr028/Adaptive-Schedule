@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.Utils.DataBaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +38,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
     private RecyclerView tasksRecyclerView;
     private ToDoAdapter tasksAdapter;
+    private ListToDoAdapter listsAdapter;
     private EditText listName;
     private FloatingActionButton addTaskButton;
     private FloatingActionButton addItemButton;
@@ -121,7 +123,8 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
                     i++;
                 }
-
+                // notify data set has changed for LISTS
+                listsAdapter.notifyDataSetChanged();
                 finish(); // end activity
 
             }
