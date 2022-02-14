@@ -98,34 +98,38 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // need code here to add LIST NAME to parent database before finishing and returning to List Activity screen
-                String text = listName.getText().toString(); // fetches edittext and sets as name in database
 
-                // inserting a new list
-                ParentToDoModel list = new ParentToDoModel();
-                // inserting the info for database
-                list.setName(text);
+                // prevent creating empty list
+                if (tasksAdapter.getItemCount() != 0){
+                    // need code here to add LIST NAME to parent database before finishing and returning to List Activity screen
+                    String text = listName.getText().toString(); // fetches edittext and sets as name in database
 
-                db.insertList(list);
-                // need to pull ID here?
-                // need to set ID of new list to parentID of all list items currently displayed
-                //int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
-                int newListID = db.getLastInsert(); // method uses last_insert_rowid in SQlite
+                    // inserting a new list
+                    ParentToDoModel list = new ParentToDoModel();
+                    // inserting the info for database
+                    list.setName(text);
 
-                int i = 0;
-                while (i < taskList.size()){
+                    db.insertList(list);
+                    // need to pull ID here?
+                    // need to set ID of new list to parentID of all list items currently displayed
+                    //int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
+                    int newListID = db.getLastInsert(); // method uses last_insert_rowid in SQlite
 
-                    taskList.get(i).setAge(1); // set age of each item in current display list to 1
-                    db.updateAge(taskList.get(i).getId(),1); // update database items with age of 1
+                    int i = 0;
+                    while (i < taskList.size()){
 
-                    taskList.get(i).setParentID(newListID); // update list items parentID
-                    db.updateParent(taskList.get(i).getId(),newListID); // attaches new entry items to parent list in DB
+                        taskList.get(i).setAge(1); // set age of each item in current display list to 1
+                        db.updateAge(taskList.get(i).getId(),1); // update database items with age of 1
 
-                    i++;
+                        taskList.get(i).setParentID(newListID); // update list items parentID
+                        db.updateParent(taskList.get(i).getId(),newListID); // attaches new entry items to parent list in DB
+
+                        i++;
+                    }
+                    // notify data set has changed for LISTS
+                    listsAdapter.notifyDataSetChanged();
+                    finish(); // end activity
                 }
-                // notify data set has changed for LISTS
-                listsAdapter.notifyDataSetChanged();
-                finish(); // end activity
 
             }
         });

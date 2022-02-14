@@ -23,17 +23,20 @@ import com.example.shoppinglist.Utils.DataBaseHelper;
 
 import java.util.List;
 
-// used for the recycler view in createListActivity
+// used for the recycler view in ListActivity
 
 public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHolder> {
 
     private List<ParentToDoModel> listOfLists;
+    private OnListListener mOnListListener;
     private DataBaseHelper db;
     private ListsActivity activity;
 
-    public ListToDoAdapter(DataBaseHelper db, ListsActivity activity) {
+    public ListToDoAdapter(DataBaseHelper db, ListsActivity activity, OnListListener onListListener) {
         this.db = db;
         this.activity = activity;
+        this.mOnListListener = onListListener;
+
     }
 
     @NonNull
@@ -41,7 +44,7 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_layout, parent, false);
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, mOnListListener);
 
     }
 
@@ -107,14 +110,31 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // (Caleb) removed checkbox check for entry layout
         //CheckBox task;
         TextView name;
+        OnListListener onListListener;
 
-        ViewHolder(View view) {
+        ViewHolder(View view, OnListListener onListListener) {
             super(view);
             name = view.findViewById(R.id.listName);
+            this.onListListener = onListListener;
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view)
+        {
+            onListListener.onListClick(getAdapterPosition());
+        }
+    }
+
+    // detect clicking lists
+    public interface OnListListener{
+        void onListClick(int position);
     }
 }

@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingList">
         <activity
+            android:name=".InspectListActivity"
+            android:exported="false"
+            android:label="@string/title_activity_inspect_list"
+            android:theme="@style/Theme.ShoppingList.NoActionBar" />
+        <activity
             android:name=".ListsActivity"
             android:exported="false" />
         <activity

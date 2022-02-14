@@ -37,6 +37,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         this.activity = activity;
     }
 
+
+
     // override of viewtype needed to display different color layout for respective type of entry
     @Override //add this method to your adapter
     public int getItemViewType(int position) {
@@ -64,7 +66,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
             return new ViewHolder(itemView);
         }
-
 
         //return new ViewHolder(itemView);
     }
@@ -95,6 +96,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return n != 0;
     }
 
+    // override to check if currently being created list is empty, to prevent crashing from creating empty list
     @Override
     public int getItemCount() {
         return todoList.size();

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import com.example.shoppinglist.Utils.DataBaseHelper;
 import java.util.Collections;
 import java.util.List;
 
-public class ListsActivity extends AppCompatActivity implements DialogCloseListener{
+public class ListsActivity extends AppCompatActivity implements DialogCloseListener, ListToDoAdapter.OnListListener {
 
     private DataBaseHelper db;
 
@@ -41,7 +42,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         listsRecyclerView = findViewById(R.id.listsRecyclerView);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        listsAdapter = new ListToDoAdapter(db,ListsActivity.this);
+        listsAdapter = new ListToDoAdapter(db,ListsActivity.this, this);
         listsRecyclerView.setAdapter(listsAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelperLists(listsAdapter));
@@ -64,9 +65,24 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
 
     }
 
+    // button function to move to InspectList screen
+    public void openInspectListActivity() {
+        Intent intent = new Intent(this, InspectListActivity.class);
+        startActivity(intent);
+    }
+
     // button function to move to CreateList screen
     public void openCreateListActivity() {
         Intent intent = new Intent(this, CreateListActivity.class);
+        startActivity(intent);
+    }
+
+    // clicking on lists
+    @Override
+    public void onListClick(int position){
+        //Log.d(TAG, "onListClick: clicked");
+        listOfLists.get(position); // will be used to load proper info in list inspection
+        Intent intent = new Intent(this, InspectListActivity.class);
         startActivity(intent);
     }
 
