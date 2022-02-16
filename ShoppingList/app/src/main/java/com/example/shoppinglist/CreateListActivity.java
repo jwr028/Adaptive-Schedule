@@ -46,6 +46,8 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
     private List<ToDoModel> taskList;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,9 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
         tasksAdapter = new ToDoAdapter(db,CreateListActivity.this);
         tasksRecyclerView.setAdapter(tasksAdapter);
+
+        //listsAdapter = new ListToDoAdapter(db,CreateListActivity.this);
+        //tasksRecyclerView.setAdapter(tasksAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
@@ -127,8 +132,12 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
                         i++;
                     }
                     // notify data set has changed for LISTS
-                    listsAdapter.notifyDataSetChanged();
-                    finish(); // end activity
+                    //Intent returnIntent = new Intent();
+                    //returnIntent.putExtra("result",result);
+                    //setResult(ListsActivity.RESULT_OK,returnIntent);
+                    //listsAdapter.deleteAllLists();
+                    finish();
+                    //Adapter.notifyDataSetChanged();
                 }
 
             }

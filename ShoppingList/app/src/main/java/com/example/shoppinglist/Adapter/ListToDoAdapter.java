@@ -96,6 +96,21 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
         notifyItemRemoved(position);
     }
 
+    public void deleteAllLists() {
+        int size = listOfLists.size();
+
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                listOfLists.remove(0);
+            }
+
+            notifyItemRangeRemoved(0, size);
+        }
+
+        db.deleteAllLists();
+        //notifyDataSetChanged();
+    }
+
     // does not work yet
     public void editNameOfList(int position) {
         ParentToDoModel list = listOfLists.get(position);

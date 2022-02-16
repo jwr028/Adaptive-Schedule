@@ -260,6 +260,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, PARENT_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
+
     public int getLastInsert(){
         SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
         String queryString = "SELECT last_insert_rowid()"; // SQlite command to fetch ID of most recent INSERT
@@ -272,5 +273,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
     }
+
+    public void deleteAllLists() {
+        //SQLiteDatabase db = this.getWritableDatabase(); // command to open database for reading
+        //String queryString = "DELETE FROM " + TABLE_NAME; // SQlite command to fetch ID of most recent INSERT
+        //dbWrite = getWritableDatabase();
+        db.delete(PARENT_TABLE_NAME,null,null);
+        db.delete(TABLE_NAME,null,null);
+        //db.execSQL(queryString);
+        //db.close();
+
+    }
+
 }
 

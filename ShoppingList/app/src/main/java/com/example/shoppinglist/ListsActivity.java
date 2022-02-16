@@ -22,15 +22,25 @@ import java.util.List;
 
 public class ListsActivity extends AppCompatActivity implements DialogCloseListener, ListToDoAdapter.OnListListener {
 
+    private int LAUNCH_SECOND_ACTIVITY = 1;
     private DataBaseHelper db;
 
     private RecyclerView listsRecyclerView;
     private ListToDoAdapter listsAdapter;
 
     private Button newListButton;
+    private Button debugButton;
 
     private List<ParentToDoModel> listOfLists;
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+        listOfLists = db.getAllLists();
+        listsAdapter.setLists(listOfLists);
+        listsAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +59,31 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         itemTouchHelper.attachToRecyclerView(listsRecyclerView);
 
         newListButton = findViewById(R.id.newListButton);
+        debugButton = findViewById(R.id.debugButton);
+
+
 
         // fetches items and displays them
         listOfLists = db.getAllLists();
         Collections.reverse(listOfLists); // newest on top
         listsAdapter.setLists(listOfLists);
 
+
+
         // NEW LIST BUTTON FUNCTION
         newListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCreateListActivity();
+            }
+        });
+
+        // DEBUG BUTTON FUNCTION
+        debugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listsAdapter.deleteAllLists();
+                //listsRecyclerView.notifyDataSetChanged(); // need to look into this function
             }
         });
 
@@ -75,6 +99,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     public void openCreateListActivity() {
         Intent intent = new Intent(this, CreateListActivity.class);
         startActivity(intent);
+        //startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
     // clicking on lists
