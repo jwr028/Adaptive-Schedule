@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ListsActivity extends AppCompatActivity implements DialogCloseListener, ListToDoAdapter.OnListListener {
 
-    private int LAUNCH_SECOND_ACTIVITY = 1;
+    private int listID; // used for passing to inspectList
     private DataBaseHelper db;
 
     private RecyclerView listsRecyclerView;
@@ -62,12 +62,10 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         debugButton = findViewById(R.id.debugButton);
 
 
-
         // fetches items and displays them
         listOfLists = db.getAllLists();
         Collections.reverse(listOfLists); // newest on top
         listsAdapter.setLists(listOfLists);
-
 
 
         // NEW LIST BUTTON FUNCTION
@@ -106,8 +104,11 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     @Override
     public void onListClick(int position){
         //Log.d(TAG, "onListClick: clicked");
-        listOfLists.get(position); // will be used to load proper info in list inspection
+        //listOfLists.get(position); // will be used to load proper info in list inspection
+        // get parentID to pass to InspectActivity
+        listID = listOfLists.get(position).getId();
         Intent intent = new Intent(this, InspectListActivity.class);
+        intent.putExtra("listID",listID);
         startActivity(intent);
     }
 

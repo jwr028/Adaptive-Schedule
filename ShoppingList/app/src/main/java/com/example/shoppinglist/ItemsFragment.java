@@ -16,20 +16,28 @@ import com.example.shoppinglist.Adapter.ToDoAdapter;
 import com.example.shoppinglist.Model.ToDoModel;
 import com.example.shoppinglist.Utils.DataBaseHelper;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// ITEMS TAB OF INSPECTLIST ACTIVITY
 
 public class ItemsFragment extends Fragment {
 
     private DataBaseHelper db;
     private RecyclerView itemsRecyclerView;
     private InspectItemsAdapter itemsAdapter;
+    //private int listID;
     private List<ToDoModel> itemList;
+    private List<ToDoModel> filteredItemList;
+    public InspectListActivity inspectListActivity;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // declare activity to access listID variable
+        inspectListActivity = (InspectListActivity) getActivity();
 
         db = new DataBaseHelper(getActivity()); // context is inspectlistActivity?
 
@@ -42,9 +50,21 @@ public class ItemsFragment extends Fragment {
         itemsRecyclerView.setAdapter(itemsAdapter);
 
         // fetches items and displays them
-        itemList = db.getAllTasks();
+        // needs to be unique function that is only ITEMS of SELECTED LIST
+        //itemList = db.getAllTasks();
+        itemList = db.getAllListItems();
+        filteredItemList = new ArrayList<>();
+        // iterate through itemList and get only items that match parent ID
+        int i = 0;
+        while (i < itemList.size()){
+            if (itemList.get(i).getParentID() == inspectListActivity.listID){
+                filteredItemList.add(itemList.get(i)); // add item to filtered list if belongs to correct parent
+            }
+            i++;
+        }
+
         //Collections.reverse(taskList); // newest on top
-        itemsAdapter.setTasks(itemList);
+        itemsAdapter.setTasks(filteredItemList);
 
         return view;
     }

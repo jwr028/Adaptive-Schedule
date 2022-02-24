@@ -19,10 +19,16 @@ import com.example.shoppinglist.databinding.ActivityInspectListBinding;
 public class InspectListActivity extends AppCompatActivity {
 
     private ActivityInspectListBinding binding;
+    public int listID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            listID = extras.getInt("listID");
+        }
 
         binding = ActivityInspectListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

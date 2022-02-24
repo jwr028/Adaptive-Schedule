@@ -129,6 +129,96 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return parentList;
     }
 
+    // needs to fetch ITEM matching PARENT ID of selected list (int parameter?)
+    public List<ToDoModel> getAllListItems(){
+
+        List<ToDoModel> taskList = new ArrayList<>();
+
+        // get data from database
+        //String queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_TYPE + "=" + "item";
+        String queryString = "SELECT * FROM " +TABLE_NAME+ " WHERE " +COL_TYPE+ "=" + "'item'";
+        //String queryString = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
+
+        Cursor cursor = db.rawQuery(queryString,null);
+
+        if (cursor.moveToFirst()) {
+            // loop through results and create new objects then return them as list
+            do {
+                int taskID = cursor.getInt(0);
+                String taskText = cursor.getString(1);
+                int taskStatus = cursor.getInt(2);
+                String taskType = cursor.getString(3);
+                int taskAge = cursor.getInt(4);
+                int parentID = cursor.getInt(5);
+
+                ToDoModel newTask = new ToDoModel();
+
+                newTask.setId(taskID);
+                newTask.setParentID(parentID);
+                newTask.setTask(taskText);
+                newTask.setStatus(taskStatus);
+                newTask.setType(taskType);
+                newTask.setAge(taskAge);
+
+                taskList.add(newTask);
+
+            } while(cursor.moveToNext());
+        }
+        else {
+            // failure, don't add anything
+        }
+
+        cursor.close();
+        db.close();
+        return taskList;
+    }
+
+    // needs to fetch ITEM matching PARENT ID of selected list (int parameter?)
+    public List<ToDoModel> getAllListTasks(){
+
+        List<ToDoModel> taskList = new ArrayList<>();
+
+        // get data from database
+        //String queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_TYPE + "=" + "item";
+        String queryString = "SELECT * FROM " +TABLE_NAME+ " WHERE " +COL_TYPE+ "=" + "'task'";
+        //String queryString = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
+
+        Cursor cursor = db.rawQuery(queryString,null);
+
+        if (cursor.moveToFirst()) {
+            // loop through results and create new objects then return them as list
+            do {
+                int taskID = cursor.getInt(0);
+                String taskText = cursor.getString(1);
+                int taskStatus = cursor.getInt(2);
+                String taskType = cursor.getString(3);
+                int taskAge = cursor.getInt(4);
+                int parentID = cursor.getInt(5);
+
+                ToDoModel newTask = new ToDoModel();
+
+                newTask.setId(taskID);
+                newTask.setParentID(parentID);
+                newTask.setTask(taskText);
+                newTask.setStatus(taskStatus);
+                newTask.setType(taskType);
+                newTask.setAge(taskAge);
+
+                taskList.add(newTask);
+
+            } while(cursor.moveToNext());
+        }
+        else {
+            // failure, don't add anything
+        }
+
+        cursor.close();
+        db.close();
+        return taskList;
+    }
+
     // used to fetch all items (probably not used)
     public List<ToDoModel> getAllTasks(){
 
