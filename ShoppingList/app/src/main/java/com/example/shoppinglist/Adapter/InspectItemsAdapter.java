@@ -17,6 +17,7 @@ import com.example.shoppinglist.CreateListActivity;
 import com.example.shoppinglist.AddNewTask;
 import com.example.shoppinglist.AddNewItem;
 
+import com.example.shoppinglist.ItemsFragment;
 import com.example.shoppinglist.Model.ToDoModel;
 import com.example.shoppinglist.R;
 import com.example.shoppinglist.Utils.DataBaseHelper;
@@ -24,17 +25,17 @@ import com.example.shoppinglist.Utils.DataBaseHelper;
 
 import java.util.List;
 
-// used for the recycler view in createListActivity
+// used for the inspect ITEMS fragment
 
-public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
+public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapter.ViewHolder> {
 
     private List<ToDoModel> todoList;
     private DataBaseHelper db;
-    private CreateListActivity activity;
+    private ItemsFragment fragment;
 
-    public ToDoAdapter(DataBaseHelper db, CreateListActivity activity) {
+    public InspectItemsAdapter(DataBaseHelper db, ItemsFragment fragment) {
         this.db = db;
-        this.activity = activity;
+        this.fragment = fragment;
     }
 
     // override of viewtype needed to display different color layout for respective type of entry
@@ -77,17 +78,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
         //holder.task.setChecked(toBoolean(item.getStatus()));
         /**
-        holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    db.updateStatus(item.getId(), 1);
-                } else {
-                    db.updateStatus(item.getId(), 0);
-                }
-            }
+         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+        db.updateStatus(item.getId(), 1);
+        } else {
+        db.updateStatus(item.getId(), 0);
+        }
+        }
         });
-        */
+         */
     }
 
     private boolean toBoolean(int n) {
@@ -101,7 +102,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     }
 
     public Context getContext() {
-        return activity;
+        return fragment.getContext();
     }
 
     public void setTasks(List<ToDoModel> todoList) {
@@ -116,24 +117,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         notifyItemRemoved(position);
     }
 
-    public void editItem(int position) {
-        ToDoModel item = todoList.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
-        bundle.putString("task", item.getTask());
-
-        // code to change color of "SAVE" when editing to match task or item
-        if (item.getType().equals("task")) {
-            AddNewTask fragment = new AddNewTask();
-            fragment.setArguments(bundle);
-            fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
-        } else {
-            AddNewItem fragment = new AddNewItem();
-            fragment.setArguments(bundle);
-            fragment.show(activity.getSupportFragmentManager(), AddNewItem.TAG);
-        }
-
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // (Caleb) removed checkbox check for entry layout

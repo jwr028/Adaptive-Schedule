@@ -46,8 +46,6 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
     private List<ToDoModel> taskList;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
