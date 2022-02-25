@@ -30,6 +30,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
 
     private Button newListButton;
     private Button debugButton;
+    private Button specifyButton;
 
     private List<ParentToDoModel> listOfLists;
 
@@ -60,6 +61,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
 
         newListButton = findViewById(R.id.newListButton);
         debugButton = findViewById(R.id.debugButton);
+        specifyButton = findViewById(R.id.specifyButton);
 
 
         // fetches items and displays them
@@ -85,6 +87,14 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
             }
         });
 
+        specifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebScrape();
+                //listsRecyclerView.notifyDataSetChanged(); // need to look into this function
+            }
+        });
+
     }
 
     // button function to move to InspectList screen
@@ -96,6 +106,12 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     // button function to move to CreateList screen
     public void openCreateListActivity() {
         Intent intent = new Intent(this, CreateListActivity.class);
+        startActivity(intent);
+        //startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+    }
+
+    public void openWebScrape() {
+        Intent intent = new Intent(this, WebScrape.class);
         startActivity(intent);
         //startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
