@@ -72,7 +72,7 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         return view;
     }
 
-    // clicking on items
+    // clicking on items (has placeholder)
     @Override
     public void onItemClick(int position){
         //Log.d(TAG, "onListClick: clicked");
