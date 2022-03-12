@@ -30,12 +30,14 @@ import java.util.List;
 public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapter.ViewHolder> {
 
     private List<ToDoModel> todoList;
+    private OnItemListener mOnItemListener;
     private DataBaseHelper db;
     private ItemsFragment fragment;
 
-    public InspectItemsAdapter(DataBaseHelper db, ItemsFragment fragment) {
+    public InspectItemsAdapter(DataBaseHelper db, ItemsFragment fragment, OnItemListener onItemListener) {
         this.db = db;
         this.fragment = fragment;
+        this.mOnItemListener = onItemListener;
     }
 
     // override of viewtype needed to display different color layout for respective type of entry
@@ -59,11 +61,11 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
         // need to distinguish layouts with respective colors
         if (viewType == 1) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_blue, parent, false);
-            return new ViewHolder(itemView);
+            return new ViewHolder(itemView,mOnItemListener);
         }
         else {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
-            return new ViewHolder(itemView);
+            return new ViewHolder(itemView,mOnItemListener);
         }
 
         //return new ViewHolder(itemView);
@@ -77,18 +79,7 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
         holder.task.setText(item.getTask());
 
         //holder.task.setChecked(toBoolean(item.getStatus()));
-        /**
-         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-        db.updateStatus(item.getId(), 1);
-        } else {
-        db.updateStatus(item.getId(), 0);
-        }
-        }
-        });
-         */
+
     }
 
     private boolean toBoolean(int n) {
@@ -118,14 +109,29 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // (Caleb) removed checkbox check for entry layout
         //CheckBox task;
         TextView task;
+        OnItemListener onItemListener;
 
-        ViewHolder(View view) {
+        ViewHolder(View view, OnItemListener onItemListener) {
             super(view);
             task = view.findViewById(R.id.taskText);
+            this.onItemListener = onItemListener;
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view)
+        {
+            onItemListener.onItemClick(getAdapterPosition());
+        }
+    }
+
+    // detect clicking items
+    public interface OnItemListener{
+        void onItemClick(int position);
     }
 }

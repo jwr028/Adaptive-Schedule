@@ -19,7 +19,6 @@ import com.example.shoppinglist.EditListName;
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.R;
 import com.example.shoppinglist.Utils.DataBaseHelper;
-//import com.example.shoppinglist.Utils.DatabaseHandler;
 
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
         this.db = db;
         this.activity = activity;
         this.mOnListListener = onListListener;
-
     }
 
     @NonNull
@@ -56,18 +54,7 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
         holder.name.setText(list.getName());
 
         //holder.task.setChecked(toBoolean(item.getStatus()));
-        /**
-         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-        db.updateStatus(item.getId(), 1);
-        } else {
-        db.updateStatus(item.getId(), 0);
-        }
-        }
-        });
-         */
+
     }
 
     private boolean toBoolean(int n) {
