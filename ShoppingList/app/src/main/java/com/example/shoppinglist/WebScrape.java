@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jsoup.Jsoup;
 
@@ -17,8 +18,9 @@ import java.lang.reflect.Array;
 
 public class WebScrape extends AppCompatActivity {
 
-    TextView webText; // Declaration of text box (if text box is changed/renamed change here)
-    ImageView webImage;
+    //TextView webText; // Declaration of text box (if text box is changed/renamed change here)
+    //ImageView webImage;
+    RecyclerView recyclerViewWeb;
     String item = "milk";
     int page = 1;
     private Button nextPage;
@@ -30,8 +32,9 @@ public class WebScrape extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_scrape_specify);
 
-        webText = findViewById(R.id.webText);
-        webImage = findViewById(R.id.webImage);
+        //webText = findViewById(R.id.webText);
+        //webImage = findViewById(R.id.webImage);
+        recyclerViewWeb = findViewById(R.id.recyclerViewWeb);
         nextPage = findViewById(R.id.nextPage);
         previousPage = findViewById(R.id.previousPage);
 
@@ -62,7 +65,7 @@ public class WebScrape extends AppCompatActivity {
 
     }
     String thePicture;
-    String theDescription;
+    List theDescription;
 
     private class description_webscrape extends AsyncTask<Void, Void, Void> {
 
@@ -91,8 +94,8 @@ public class WebScrape extends AppCompatActivity {
             org.jsoup.select.Elements elementsImage = document.select("img[class=absolute top-0 left-0]");
 
             for (int i = 0; i<10; i++) {
-                theDescription = elementsText.eq(0).text();
-                thePicture = elementsImage.eq(0).attr("src_set");
+                theDescription.addItem(elementsText.eq(i).text());
+                //thePicture = elementsImage.eq(0).attr("src_set");
             }
 
 
@@ -103,8 +106,11 @@ public class WebScrape extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            webText.setText(theDescription);
-            webImage.setImageURI(Uri.parse(thePicture));
+            recyclerViewWeb = theDescription;
+
+            //(theDescription);
+
+            //webImage.setImageURI(Uri.parse(thePicture));
         }
 
 
