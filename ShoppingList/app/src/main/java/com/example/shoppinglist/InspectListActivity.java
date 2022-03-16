@@ -1,5 +1,6 @@
 package com.example.shoppinglist;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +39,8 @@ public class InspectListActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+
+
 
         /* placeholder button if we need it
         FloatingActionButton fab = binding.fab;

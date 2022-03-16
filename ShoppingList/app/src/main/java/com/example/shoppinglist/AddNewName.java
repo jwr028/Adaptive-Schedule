@@ -2,6 +2,7 @@ package com.example.shoppinglist;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,22 +27,32 @@ import com.example.shoppinglist.Utils.DatabaseHandler;
 
 import java.util.Objects;
 
-public class AddNewTask extends BottomSheetDialogFragment {
+// prompt for textview to change name when in createList activity
+
+public class AddNewName extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
     private Button newTaskSaveButton;
 
-    private DataBaseHelper db;
 
-    public static AddNewTask newInstance(){
-        return new AddNewTask();
+    // need current activity to change listName textview
+    public CreateListActivity listActivity;
+
+    //private DataBaseHelper db; // will change to DataBaseHelper
+
+    public static AddNewName newInstance(){
+        return new AddNewName();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
+
+        // need current activity to change listName textview
+        listActivity = (CreateListActivity) getActivity();
+
     }
 
     @Nullable
@@ -49,7 +60,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.new_task, container, false);
+        View view = inflater.inflate(R.layout.new_name, container, false);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return view;
@@ -58,8 +69,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.newTaskText);
-        newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
+        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.newNameText);
+        newTaskSaveButton = getView().findViewById(R.id.newNameButton);
 
         boolean isUpdate = false;
 
@@ -70,13 +81,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
             newTaskText.setText(task);
             assert task != null;
             if(task.length()>0)
-                newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorBlue));
+                newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorGreen));
         }
 
-        newTaskSaveButton.setEnabled(false);
-
-        db = new DataBaseHelper(getActivity());
-        db.openDatabase();
+        newTaskSaveButton.setEnabled(false); // prevent empty names
+        //db = new DataBaseHelper(getActivity());
+        //db.openDatabase();
 
         // code to enable and change save button color when task has text entered
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -88,9 +98,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 }
                 else{
                     newTaskSaveButton.setEnabled(true);
-                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorBlue));
+                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorGreen));
                 }
-
             }
 
             @Override
@@ -101,7 +110,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 }
                 else{
                     newTaskSaveButton.setEnabled(true);
-                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorBlue));
+                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorGreen));
                 }
             }
 
@@ -110,26 +119,20 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         });
 
-        // EDITING AN ENTRY
-        final boolean finalIsUpdate = isUpdate;
+        // CLICKING SAVE BUTTON (PASS TEXT TO PREV ACTIVITY)
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = newTaskText.getText().toString();
-                // updating a task
-                if(finalIsUpdate){
-                    db.updateTask(bundle.getInt("id"), text);
-                }
-                // inserting a new task
-                else {
-                    ToDoModel task = new ToDoModel();
-                    // inserting the info for database
-                    task.setTask(text);
-                    task.setStatus(0);
-                    task.setType("task"); //used to distinguish items and tasks
 
-                    db.insertTask(task);
-                }
+
+                // need to pass new text to textview in createList
+                //Intent intent = new Intent();
+                //intent.putExtra("NEW NAME",text);
+                //setResult(2,intent);
+
+                listActivity.listName.setText(text);
+
                 dismiss();
             }
         });

@@ -9,7 +9,11 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:hint="New list name..." />
+        android:hint="New list name..."
+
+        android:singleLine="true"
+
+        />
 
     <Button
         android:id="@+id/newNameButton"

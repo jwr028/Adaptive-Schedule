@@ -36,6 +36,9 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // need to assign onclick listener to checkbox to update database when clicked
+
+
         // declare activity to access listID variable
         inspectListActivity = (InspectListActivity) getActivity();
 

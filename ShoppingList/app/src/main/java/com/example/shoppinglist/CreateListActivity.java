@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
@@ -39,7 +40,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     private RecyclerView tasksRecyclerView;
     private ToDoAdapter tasksAdapter;
     private ListToDoAdapter listsAdapter;
-    private EditText listName;
+    public TextView listName;
     private FloatingActionButton addTaskButton;
     private FloatingActionButton addItemButton;
     private Button finishButton;
@@ -97,6 +98,16 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
             }
         });
 
+        // MAKE TEXT VIEW CLICKABLE with editing layout (cleaner than generic edittext widget)
+        listName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // duplicated the code for new task to separate new task and item
+                AddNewName.newInstance().show(getSupportFragmentManager(), AddNewName.TAG);
+
+            }
+        });
+
         // FINISH LIST BUTTON FUNCTION
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +116,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
                 // prevent creating empty list
                 if (tasksAdapter.getItemCount() != 0){
                     // need code here to add LIST NAME to parent database before finishing and returning to List Activity screen
-                    String text = listName.getText().toString(); // fetches edittext and sets as name in database
+                    String text = listName.getText().toString(); // fetches TextView and sets as name in database
 
                     // inserting a new list
                     ParentToDoModel list = new ParentToDoModel();
@@ -140,7 +151,25 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
             }
         });
+
+
     }
+
+    /*
+    // Call Back method  to get the Message from other Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==2)
+        {
+            String message=data.getStringExtra("NEW NAME");
+            listName.setText(message);
+        }
+    }
+
+     */
 
     @Override
     public void handleDialogClose(DialogInterface dialog){

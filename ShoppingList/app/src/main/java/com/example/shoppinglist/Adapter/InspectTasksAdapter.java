@@ -33,62 +33,53 @@ public class InspectTasksAdapter extends RecyclerView.Adapter<InspectTasksAdapte
     private DataBaseHelper db;
     private TasksFragment fragment;
 
+    // need to create onclick listener for checkbox to update database
+    private CheckBox checkBox;
+
     public InspectTasksAdapter(DataBaseHelper db, TasksFragment fragment) {
         this.db = db;
         this.fragment = fragment;
     }
 
-    // override of viewtype needed to display different color layout for respective type of entry
-    @Override //add this method to your adapter
-    public int getItemViewType(int position) {
-        final ToDoModel item = todoList.get(position);
-        if(item.getType().toString().equals("task")){
-            return 1; // blue layout
-        }else{
-            //System.out.println(); lol
-            return 2; // green layout
-        }
-    }
 
-    // (Caleb) here I replaced task_layout with task_entry_layout
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        //View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout, parent, false);
-        // need to distinguish layouts with respective colors
-        if (viewType == 1) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_blue, parent, false);
-            return new ViewHolder(itemView);
-        }
-        else {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
-            return new ViewHolder(itemView);
-        }
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_layout, parent, false);
 
-        //return new ViewHolder(itemView);
+        // declaration for onclick listener
+        checkBox = itemView.findViewById(R.id.todoCheckBox);
+
+        return new ViewHolder(itemView);
+        
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         db.openDatabase();
 
         final ToDoModel item = todoList.get(position);
-        holder.task.setText(item.getTask());
+        holder.taskStatus.setText(item.getTask());
 
-        //holder.task.setChecked(toBoolean(item.getStatus()));
-        /**
-         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-        db.updateStatus(item.getId(), 1);
-        } else {
-        db.updateStatus(item.getId(), 0);
-        }
-        }
+        // this sets the checkbox CHECKED if status == 1
+        holder.taskStatus.setChecked(toBoolean(item.getStatus()));
+
+        // trigger function on checkbox click
+        //checkBox = findViewById (can't do this in fragment)
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //openCreateListActivity();
+                // get adapter position?
+
+                updateStatus(holder.getAbsoluteAdapterPosition());
+            }
         });
-         */
+
+
     }
 
     private boolean toBoolean(int n) {
@@ -110,6 +101,18 @@ public class InspectTasksAdapter extends RecyclerView.Adapter<InspectTasksAdapte
         notifyDataSetChanged();
     }
 
+    // called on checkbox click (declared in XML)
+    public void updateStatus(int position) {
+        ToDoModel item = todoList.get(position);
+        // if status is 0, set to 1, and vice versa
+        if (item.getStatus() == 0) {
+            db.updateStatus(item.getId(), 1);
+        }
+        else {
+            db.updateStatus(item.getId(), 0);
+        }
+    }
+
     public void deleteItem(int position) {
         ToDoModel item = todoList.get(position);
         db.deleteTask(item.getId());
@@ -119,13 +122,14 @@ public class InspectTasksAdapter extends RecyclerView.Adapter<InspectTasksAdapte
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // (Caleb) removed checkbox check for entry layout
-        //CheckBox task;
-        TextView task;
+
+        CheckBox taskStatus;
+        //TextView task;
 
         ViewHolder(View view) {
             super(view);
-            task = view.findViewById(R.id.taskText);
+            //task = view.findViewById(R.id.taskText);
+            taskStatus = view.findViewById(R.id.todoCheckBox);
         }
     }
 }

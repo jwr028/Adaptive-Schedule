@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shoppinglist.Adapter.InspectItemsAdapter;
+import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Adapter.ToDoAdapter;
 import com.example.shoppinglist.Model.ToDoModel;
 import com.example.shoppinglist.Utils.DataBaseHelper;
@@ -19,10 +20,11 @@ import com.example.shoppinglist.Utils.DataBaseHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import android.content.Intent;
 
 // ITEMS TAB OF INSPECTLIST ACTIVITY
 
-public class ItemsFragment extends Fragment {
+public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnItemListener {
 
     private DataBaseHelper db;
     private RecyclerView itemsRecyclerView;
@@ -46,7 +48,8 @@ public class ItemsFragment extends Fragment {
         RecyclerView itemsRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewItems);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        InspectItemsAdapter itemsAdapter = new InspectItemsAdapter(db,ItemsFragment.this);
+        // this needs 3 arguments to accommodate for click listener
+        InspectItemsAdapter itemsAdapter = new InspectItemsAdapter(db,ItemsFragment.this, this);
         itemsRecyclerView.setAdapter(itemsAdapter);
 
         // fetches items and displays them
@@ -67,5 +70,17 @@ public class ItemsFragment extends Fragment {
         itemsAdapter.setTasks(filteredItemList);
 
         return view;
+    }
+
+    // clicking on items (has placeholder)
+    @Override
+    public void onItemClick(int position){
+        //Log.d(TAG, "onListClick: clicked");
+        //listOfLists.get(position); // will be used to load proper info in list inspection
+        // get parentID to pass to InspectActivity
+        //listID = listOfLists.get(position).getId();
+        Intent intent = new Intent(getActivity(), PlaceholderActivity.class);
+        //intent.putExtra("listID",listID);
+        startActivity(intent);
     }
 }
