@@ -6,6 +6,7 @@ public class ToDoModel {
     private int id, parentID, status, age;
     private String task; // entry text
     private String type; // for distinguishing between shop items and tasks
+    private String storeItemID;
 
     //getters n setters
     public int getId() {
@@ -47,4 +48,9 @@ public class ToDoModel {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public String getStoreItemID() {
+        return storeItemID;
+    }
+    public void setStoreItemID(String type) { this.storeItemID = storeItemID; }
 }

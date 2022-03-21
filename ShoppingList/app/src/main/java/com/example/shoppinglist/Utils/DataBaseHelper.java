@@ -29,6 +29,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_STATUS = "STATUS";
     public static final String COL_TYPE = "TYPE";
     public static final String COL_AGE = "AGE";
+    public static final String COL_STOREITEMID = "STOREITEMID";
 
     public static SQLiteDatabase db;
 
@@ -50,7 +51,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // string to cast command to SQL to create database for an individual list
         String createTableStatement = "CREATE TABLE " + TABLE_NAME + " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                  + COL_TASK + " TEXT, " + COL_STATUS + " INTEGER, " + COL_TYPE + " TEXT, " + COL_AGE + " INTEGER, "
-                + PARENT_ID + " INTEGER, " + " FOREIGN KEY " + "(" +PARENT_ID+ ")" + " REFERENCES " + PARENT_TABLE_NAME + "(" + LIST_ID + ")" + ")";
+                + PARENT_ID + " INTEGER, " +COL_STOREITEMID+ " TEXT, " + " FOREIGN KEY " + "(" +PARENT_ID+ ")" + " REFERENCES " + PARENT_TABLE_NAME + "(" + LIST_ID + ")" + ")";
 
         db.execSQL(createTableStatement);
     }
@@ -86,6 +87,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COL_STATUS, 0); // for checkbox
         cv.put(COL_TYPE, task.getType());
         cv.put(COL_AGE, 0); // for distinguishing new items from items already stored
+        cv.put(COL_STOREITEMID, task.getStoreItemID());
 
         long insert = db.insert(TABLE_NAME, null, cv);
         if (insert == -1) {
@@ -151,6 +153,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String taskType = cursor.getString(3);
                 int taskAge = cursor.getInt(4);
                 int parentID = cursor.getInt(5);
+                String storeItemID = cursor.getString(6);
 
                 ToDoModel newTask = new ToDoModel();
 
@@ -160,6 +163,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 newTask.setStatus(taskStatus);
                 newTask.setType(taskType);
                 newTask.setAge(taskAge);
+                newTask.setStoreItemID(storeItemID);
 
                 taskList.add(newTask);
 
@@ -174,7 +178,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return taskList;
     }
 
-    // needs to fetch ITEM matching PARENT ID of selected list (int parameter?)
+    // needs to fetch TASK matching PARENT ID of selected list (int parameter?)
     public List<ToDoModel> getAllListTasks(){
 
         List<ToDoModel> taskList = new ArrayList<>();
@@ -196,6 +200,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String taskType = cursor.getString(3);
                 int taskAge = cursor.getInt(4);
                 int parentID = cursor.getInt(5);
+                String storeItemID = cursor.getString(6);
+
 
                 ToDoModel newTask = new ToDoModel();
 
@@ -205,6 +211,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 newTask.setStatus(taskStatus);
                 newTask.setType(taskType);
                 newTask.setAge(taskAge);
+                newTask.setStoreItemID(storeItemID);
 
                 taskList.add(newTask);
 
@@ -219,7 +226,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return taskList;
     }
 
-    // used to fetch all items (probably not used)
+    // used to fetch all items and tasks in a list (probably not used)
     public List<ToDoModel> getAllTasks(){
 
         List<ToDoModel> taskList = new ArrayList<>();
@@ -239,6 +246,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String taskType = cursor.getString(3);
                 int taskAge = cursor.getInt(4);
                 int parentID = cursor.getInt(5);
+                String storeItemID = cursor.getString(6);
 
                 ToDoModel newTask = new ToDoModel();
 
@@ -248,6 +256,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 newTask.setStatus(taskStatus);
                 newTask.setType(taskType);
                 newTask.setAge(taskAge);
+                newTask.setStoreItemID(storeItemID);
 
                 taskList.add(newTask);
 
@@ -262,7 +271,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return taskList;
     }
 
-    // used to fetch and refresh list of tasks currently
+    // used to fetch and refresh list of tasks currently (used in createlist activity)
     public List<ToDoModel> getAllNewTasks(){
 
         List<ToDoModel> taskList = new ArrayList<>();
@@ -282,6 +291,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String taskType = cursor.getString(3);
                 int taskAge = cursor.getInt(4);
                 int parentID = cursor.getInt(5);
+                String storeItemID = cursor.getString(6);
 
                 ToDoModel newTask = new ToDoModel();
 
@@ -291,6 +301,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 newTask.setType(taskType);
                 newTask.setAge(taskAge);
                 newTask.setParentID(parentID);
+                newTask.setStoreItemID(storeItemID);
 
                 taskList.add(newTask);
 
