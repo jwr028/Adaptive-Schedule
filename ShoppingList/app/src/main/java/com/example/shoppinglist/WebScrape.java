@@ -15,9 +15,46 @@ import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class WebScrape extends AppCompatActivity {
 
+    private String itemName;
+    private String imageURL;
+
+    public WebScrape(String itemName, String imageURL) {
+        this.itemName = itemName;
+        this.imageURL = imageURL;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    private ArrayList<WebScrape> initCities() {
+        ArrayList<WebScrape> list = new ArrayList<>();
+
+        list.add(new WebScrape("Cinque Terre", "https://bit.ly/CBImageCinque"));
+        list.add(new WebScrape("Paris", "https://bit.ly/CBImageParis"));
+        list.add(new WebScrape("Rio de Janeiro", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrape("Sydney", "https://bit.ly/CBImageSydney"));
+
+        return list;
+    }
+
+    /*
     //TextView webText; // Declaration of text box (if text box is changed/renamed change here)
     //ImageView webImage;
     RecyclerView recyclerViewWeb;
@@ -106,7 +143,7 @@ public class WebScrape extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            recyclerViewWeb = theDescription;
+
 
             //(theDescription);
 
