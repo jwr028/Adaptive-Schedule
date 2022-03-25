@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.shoppinglist.Adapter.WebScrapeAdapter;
 
 import org.jsoup.Jsoup;
 
@@ -19,39 +22,33 @@ import java.util.ArrayList;
 
 public class WebScrape extends AppCompatActivity {
 
-    private String itemName;
-    private String imageURL;
+    private RecyclerView recyclerViewWeb;
+    private RecyclerView.Adapter adapter;
 
-    public WebScrape(String itemName, String imageURL) {
-        this.itemName = itemName;
-        this.imageURL = imageURL;
-    }
+    private ArrayList<WebScrapeItem> initCities() {
+        ArrayList<WebScrapeItem> list = new ArrayList<>();
 
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    private ArrayList<WebScrape> initCities() {
-        ArrayList<WebScrape> list = new ArrayList<>();
-
-        list.add(new WebScrape("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrape("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrape("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrape("Sydney", "https://bit.ly/CBImageSydney"));
+        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
+        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
+        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageSydney"));
 
         return list;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.web_scrape_specify);
+
+        ArrayList<WebScrapeItem> recyclerViewWeb = initCities();
+
+        this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        this.recyclerViewWeb.setLayoutManager(mLayoutManager);
+
+        adapter = new WebScrapeAdapter(recyclerViewWeb);
+        this.recyclerViewWeb.setAdapter(adapter);
     }
 
     /*

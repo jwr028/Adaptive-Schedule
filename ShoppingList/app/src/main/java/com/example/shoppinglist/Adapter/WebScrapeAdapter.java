@@ -1,5 +1,7 @@
 package com.example.shoppinglist.Adapter;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,22 +12,48 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.R;
 import com.example.shoppinglist.WebScrape;
+import com.example.shoppinglist.WebScrapeItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class WebScrapeAdapter extends RecyclerView.Adapter {
 
-    private ArrayList<WebScrape> recyclerViewWeb;
+    private ArrayList<WebScrapeItem> recyclerViewWeb;
+
+    public WebScrapeAdapter(ArrayList<WebScrapeItem> recyclerViewWeb){
+        this.recyclerViewWeb = recyclerViewWeb;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public final View view;
+        public final TextView itemName;
+        public final ImageView image;
+
+        public ViewHolder(View view) {
+            super(view);
+            this.view = view;
+            itemName = view.findViewById(R.id.webText);
+            image = view.findViewById(R.id.webImage);
+        }
+    }
+
+
+
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.web_scrape_list, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        WebScrapeItem item = recyclerViewWeb.get(position);
 
+        holder.itemName.setText(item.getItemName());
+        Picasso.get().load(item.getImageURL()).into(holder.image);
     }
 
     @Override
@@ -36,16 +64,5 @@ public class WebScrapeAdapter extends RecyclerView.Adapter {
             return 0;
         }
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View view;
-        public final TextView itemName;
-        public final ImageView imageURL;
 
-        public ViewHolder(View view) {
-            super(view);
-            this.view = view;
-            itemName = view.findViewById(R.id.webText);
-            imageURL = view.findViewById(R.id.webImage);
-        }
-    }
 }
