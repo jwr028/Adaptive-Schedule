@@ -52,8 +52,8 @@ public class WebScrapeAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         WebScrapeItem item = recyclerViewWeb.get(position);
 
-        holder.itemName.setText(item.getItemName());
-        Picasso.get().load(item.getImageURL()).into(holder.image);
+        //holder.itemName.setText(item.getItemName());
+        //Picasso.get().load(item.getImageURL()).into(holder.image);
     }
 
     @Override
