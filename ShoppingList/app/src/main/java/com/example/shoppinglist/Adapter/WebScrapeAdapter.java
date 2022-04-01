@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class WebScrapeAdapter extends RecyclerView.Adapter {
+public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.ViewHolder> {
 
     private ArrayList<WebScrapeItem> recyclerViewWeb;
 
@@ -43,17 +43,19 @@ public class WebScrapeAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.web_scrape_list, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WebScrapeItem item = recyclerViewWeb.get(position);
 
-        //holder.itemName.setText(item.getItemName());
-        //Picasso.get().load(item.getImageURL()).into(holder.image);
+
+
+        holder.itemName.setText(item.getItemName());
+        Picasso.get().load(item.getImageURL()).into(holder.image);
     }
 
     @Override
