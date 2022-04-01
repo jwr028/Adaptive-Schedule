@@ -1,5 +1,7 @@
 package com.example.shoppinglist;
 
+import static com.example.shoppinglist.AddNewItem.TAG;
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
     private List<ToDoModel> itemList;
     private List<ToDoModel> filteredItemList;
     public InspectListActivity inspectListActivity;
+    private int ItemID;
 
 
     @Override
@@ -78,9 +82,10 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         //Log.d(TAG, "onListClick: clicked");
         //listOfLists.get(position); // will be used to load proper info in list inspection
         // get parentID to pass to InspectActivity
-        //listID = listOfLists.get(position).getId();
-        Intent intent = new Intent(getActivity(), PlaceholderActivity.class);
-        //intent.putExtra("listID",listID);
+
+        ItemID = itemList.get(position).getId();
+        Intent intent = new Intent(getActivity(), WebScrape.class);
+        intent.putExtra("ItemID", ItemID);
         startActivity(intent);
     }
 }

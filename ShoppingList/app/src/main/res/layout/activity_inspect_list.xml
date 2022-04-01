@@ -25,13 +25,26 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:text="Total Amount:"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:translationY="680dp" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="569dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </androidx.viewpager.widget.ViewPager>
+
     <!-- comment this is a placeholder button if we need it
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
