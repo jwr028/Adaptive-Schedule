@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
@@ -44,6 +46,9 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     private FloatingActionButton addTaskButton;
     private FloatingActionButton addItemButton;
     private Button finishButton;
+
+    //for toast
+
 
     private List<ToDoModel> taskList;
 
@@ -147,7 +152,17 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
                     //listsAdapter.deleteAllLists();
                     finish();
                     //Adapter.notifyDataSetChanged();
+                } else {
+                    // toast instead
+                    Context context = getApplicationContext();
+                    CharSequence text = "Cannot create an empty list!";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
+
+
 
             }
         });
