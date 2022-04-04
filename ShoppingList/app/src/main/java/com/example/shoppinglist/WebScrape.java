@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.Debug;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,17 +26,6 @@ public class WebScrape extends AppCompatActivity {
     private RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
 
-    private ArrayList<WebScrapeItem> initCities() {
-        ArrayList<WebScrapeItem> list = new ArrayList<>();
-
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageSydney"));
-
-        return list;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +41,16 @@ public class WebScrape extends AppCompatActivity {
         this.recyclerViewWeb.setAdapter(adapter);
     }
 
+    private ArrayList<WebScrapeItem> initCities() {
+        ArrayList<WebScrapeItem> list = new ArrayList<>();
+
+        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
+        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
+        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageSydney"));
+
+        return list;
+    }
     /*
     //TextView webText; // Declaration of text box (if text box is changed/renamed change here)
     //ImageView webImage;

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.motion.widget.Debug;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.R;
@@ -25,22 +26,6 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
         this.recyclerViewWeb = recyclerViewWeb;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View view;
-        public final TextView itemName;
-        public final ImageView image;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.view = view;
-            itemName = view.findViewById(R.id.webText);
-            image = view.findViewById(R.id.webImage);
-        }
-    }
-
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,6 +41,8 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
 
         holder.itemName.setText(item.getItemName());
         Picasso.get().load(item.getImageURL()).into(holder.image);
+
+        Debug.logStack("asd", item.getImageURL(), 10);
     }
 
     @Override
@@ -67,4 +54,16 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
         }
     }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public final View view;
+        public final TextView itemName;
+        public final ImageView image;
+
+        public ViewHolder(View view) {
+            super(view);
+            this.view = view;
+            itemName = view.findViewById(R.id.webText);
+            image = view.findViewById(R.id.webImage);
+        }
+    }
 }
