@@ -1,6 +1,5 @@
 package com.example.shoppinglist.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,7 @@ import androidx.constraintlayout.motion.widget.Debug;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.R;
-import com.example.shoppinglist.WebScrape;
-import com.example.shoppinglist.WebScrapeItem;
+import com.example.shoppinglist.Model.WebScrapeItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,10 +37,9 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
 
 
 
-        holder.itemName.setText(item.getItemName());
-        Picasso.get().load(item.getImageURL()).into(holder.image);
+        holder.getTextView().setText(item.getItemName());
+        Picasso.get().load(item.getImageURL()).into(holder.getImageView());
 
-        Debug.logStack("asd", item.getImageURL(), 10);
     }
 
     @Override
@@ -64,6 +61,14 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
             this.view = view;
             itemName = view.findViewById(R.id.webText);
             image = view.findViewById(R.id.webImage);
+        }
+
+        public TextView getTextView(){
+            return itemName;
+        }
+
+        public ImageView getImageView(){
+            return image;
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.shoppinglist;
+package com.example.shoppinglist.Model;
 
 public class WebScrapeItem{
     private String itemName;

@@ -1,37 +1,37 @@
 package com.example.shoppinglist;
 
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.motion.widget.Debug;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.Adapter.WebScrapeAdapter;
+import com.example.shoppinglist.Model.WebScrapeItem;
 
-import org.jsoup.Jsoup;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class WebScrape extends AppCompatActivity {
 
     private RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
+    private String itemName;
+
+    private Button nextPage;
+    private Button previousPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_scrape_specify);
 
-        ArrayList<WebScrapeItem> recyclerViewWeb = initCities();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            itemName = extras.getString("ItemName");
+        }
+
+        ArrayList<WebScrapeItem> recyclerViewWeb = ActualScrape();
 
         this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -41,24 +41,33 @@ public class WebScrape extends AppCompatActivity {
         this.recyclerViewWeb.setAdapter(adapter);
     }
 
-    private ArrayList<WebScrapeItem> initCities() {
+    /*private ArrayList<WebScrapeItem> initCities() {
         ArrayList<WebScrapeItem> list = new ArrayList<>();
 
         list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
         list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
         list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageSydney"));
+        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
+        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
+        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
+        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
+        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
+        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
 
         return list;
+    }*/
+
+    private  ArrayList<WebScrapeItem> ActualScrape(){
+        ArrayList<WebScrapeItem> list = new ArrayList<>();
+        String item = "milk";
+        int page = 1;
     }
+
     /*
-    //TextView webText; // Declaration of text box (if text box is changed/renamed change here)
-    //ImageView webImage;
-    RecyclerView recyclerViewWeb;
-    String item = "milk";
-    int page = 1;
-    private Button nextPage;
-    private Button previousPage;
+
 
 
     @Override
