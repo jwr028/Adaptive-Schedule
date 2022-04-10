@@ -9,19 +9,22 @@
     android:layout_marginVertical="8dp">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
-    <!-- Removing checkbox for initial createlist Items -->
+        android:padding="8dp"
+        android:background="@color/teal_light"
+        >
+        <!-- Removing checkbox for initial createlist Items -->
         <CheckBox
             android:id="@+id/todoCheckBox"
-            android:layout_width="wrap_content"
+            android:layout_width="365dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+
             android:buttonTint="@android:color/holo_blue_dark"
             android:paddingStart="8dp"
-            tools:text="Stuff to do goes here."
 
+            tools:text="Stuff to do goes here."
+            tools:textSize="20sp"
             />
 
     </RelativeLayout>
