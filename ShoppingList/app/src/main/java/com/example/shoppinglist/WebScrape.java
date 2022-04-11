@@ -15,13 +15,15 @@ import com.example.shoppinglist.Adapter.WebScrapeAdapter;
 import com.example.shoppinglist.Model.WebScrapeItem;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class WebScrape extends AppCompatActivity {
 
-    private RecyclerView recyclerViewWeb;
+    public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
     private String itemName;
 
@@ -54,6 +56,7 @@ public class WebScrape extends AppCompatActivity {
 
         adapter = new WebScrapeAdapter(recyclerViewWeb);
         this.recyclerViewWeb.setAdapter(adapter);
+
 
         nextPage = findViewById(R.id.nextPage);
         nextPage.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +118,9 @@ public class WebScrape extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             org.jsoup.nodes.Document document = null;
+            org.jsoup.select.Elements elementsText;
+            org.jsoup.select.Elements elementsImage;
+
             String url = null;
             if (page == 1){
                 url = String.format("https://www.walmart.com/search?q=%s&affinityOverride=store_led",itemName);
@@ -127,14 +133,23 @@ public class WebScrape extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            org.jsoup.select.Elements elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
-            org.jsoup.select.Elements elementsImage = document.getElementsByClass("img[class=absolute top-0 left-0]");
+            elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
+            elementsImage = document.getElementsByTag("img");
+
+            /*
+            String src;
+            for (Element el : elementsImage){
+                src = el.absUrl("src");
+                Log.d("Image", src);
+            }
+            */
 
             int i = 0;
             while (i < elementsText.size()) {
-                list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).text()));
+                list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).attr("src")));
                 Log.d("Text", elementsText.eq(i).text());
-                Log.d("Image", elementsImage.eq(i).text());
+                Log.d("Image", elementsImage.eq(i).attr("src"));
+                Log.d("Placeholder", " ");
                 i++;
             }
             /*for (int i = 0; i<10; i++) {
@@ -150,8 +165,8 @@ public class WebScrape extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-
-
+            Log.d("Text", String.valueOf(list.size()));
+            //Log.d("Text", list.toString());
 
         }
 
