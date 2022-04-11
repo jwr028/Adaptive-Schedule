@@ -60,11 +60,11 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
         //View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout, parent, false);
         // need to distinguish layouts with respective colors
         if (viewType == 1) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
             return new ViewHolder(itemView,mOnItemListener);
         }
         else {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
             return new ViewHolder(itemView,mOnItemListener);
         }
 
@@ -117,7 +117,7 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
 
         ViewHolder(View view, OnItemListener onItemListener) {
             super(view);
-            task = view.findViewById(R.id.itemCheckbox);
+            task = view.findViewById(R.id.taskText);
             this.onItemListener = onItemListener;
 
             view.setOnClickListener(this);
