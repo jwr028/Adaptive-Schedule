@@ -71,7 +71,7 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
             i++;
         }
 
-        //Collections.reverse(taskList); // newest on top
+        Collections.reverse(itemList); // newest on top
         itemsAdapter.setTasks(filteredItemList);
 
         return view;

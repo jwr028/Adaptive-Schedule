@@ -28,6 +28,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="572dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
     <TextView
         android:id="@+id/totalPrice"
         android:layout_width="match_parent"
@@ -37,15 +43,7 @@
         android:textSize="30sp"
         android:translationY="680dp" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="569dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </androidx.viewpager.widget.ViewPager>
-
-    <!-- comment this is a placeholder button if we need it
+    <!--
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -55,4 +53,5 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
         -->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

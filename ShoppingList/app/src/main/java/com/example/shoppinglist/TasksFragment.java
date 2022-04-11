@@ -66,7 +66,7 @@ public class TasksFragment extends Fragment {
             i++;
         }
 
-        //Collections.reverse(taskList); // newest on top
+        Collections.reverse(taskList); // newest on top
         tasksAdapter.setTasks(filteredTaskList);
 
         return view;
