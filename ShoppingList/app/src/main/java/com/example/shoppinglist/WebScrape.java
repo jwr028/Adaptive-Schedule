@@ -21,6 +21,8 @@ public class WebScrape extends AppCompatActivity {
     private Button nextPage;
     private Button previousPage;
 
+    /*
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,8 @@ public class WebScrape extends AppCompatActivity {
         this.recyclerViewWeb.setAdapter(adapter);
     }
 
+     */
+
     /*private ArrayList<WebScrapeItem> initCities() {
         ArrayList<WebScrapeItem> list = new ArrayList<>();
 
@@ -60,11 +64,14 @@ public class WebScrape extends AppCompatActivity {
         return list;
     }*/
 
+    /*
     private  ArrayList<WebScrapeItem> ActualScrape(){
         ArrayList<WebScrapeItem> list = new ArrayList<>();
         String item = "milk";
         int page = 1;
     }
+
+     */
 
     /*
 
