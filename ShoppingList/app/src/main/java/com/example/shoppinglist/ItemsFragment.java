@@ -2,6 +2,7 @@ package com.example.shoppinglist;
 
 import static com.example.shoppinglist.AddNewItem.TAG;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import android.content.Intent;
+import android.widget.Button;
 
 // ITEMS TAB OF INSPECTLIST ACTIVITY
 
@@ -42,6 +44,8 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
 
         // declare activity to access listID variable
         inspectListActivity = (InspectListActivity) getActivity();
@@ -74,8 +78,27 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         Collections.reverse(itemList); // newest on top
         itemsAdapter.setTasks(filteredItemList);
 
+
+        //GOOGLE MAPS NAV BUTTON //////////////////////////////////////////////////////////////
+        Button navigation_btn = (Button) view.findViewById(R.id.launch);
+
+        //Button navigation_btn = getView().findViewById(R.id.launch);
+        navigation_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("google.navigation:q=32.54372,-92.62258&mode=d"));
+                Intent chooser = Intent.createChooser(intent,"Launch Maps");
+                startActivity(chooser);
+            }
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+
         return view;
     }
+
+    
 
     // clicking on items (has placeholder)
     @Override
