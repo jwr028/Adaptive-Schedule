@@ -2,6 +2,8 @@ package com.example.shoppinglist;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -43,7 +45,8 @@ public class WebScrape extends AppCompatActivity {
         description_webscrape dw = new description_webscrape();
         dw.execute();
 
-        ArrayList<WebScrapeItem> recyclerViewWeb = list;
+        ArrayList<WebScrapeItem> recyclerViewWeb;
+        recyclerViewWeb = list;
 
         this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -52,26 +55,31 @@ public class WebScrape extends AppCompatActivity {
         adapter = new WebScrapeAdapter(recyclerViewWeb);
         this.recyclerViewWeb.setAdapter(adapter);
 
-        /*nextPage.setOnClickListener(new View.OnClickListener() {
+        nextPage = findViewById(R.id.nextPage);
+        nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 page++;
+                list.clear();
                 description_webscrape aw = new description_webscrape();
                 aw.execute();
+
             }
         });
 
+        previousPage = findViewById(R.id.previousPage);
         previousPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (page != 1) {
                     page--;
+                    list.clear();
                     description_webscrape aw = new description_webscrape();
                     aw.execute();
 
                 }
             }
-        });*/
+        });
     }
 
     /*private ArrayList<WebScrapeItem> initCities() {
@@ -120,9 +128,15 @@ public class WebScrape extends AppCompatActivity {
                 e.printStackTrace();
             }
             org.jsoup.select.Elements elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
-            org.jsoup.select.Elements elementsImage = document.select("img[class=absolute top-0 left-0]");
+            org.jsoup.select.Elements elementsImage = document.getElementsByClass("img[class=absolute top-0 left-0]");
 
-            list.add(new WebScrapeItem(elementsText.text(), elementsImage.text()));
+            int i = 0;
+            while (i < elementsText.size()) {
+                list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).text()));
+                Log.d("Text", elementsText.eq(i).text());
+                Log.d("Image", elementsImage.eq(i).text());
+                i++;
+            }
             /*for (int i = 0; i<10; i++) {
                 list.add(elementsText.eq(i).text());
                 //thePicture = elementsImage.eq(0).attr("src_set");
