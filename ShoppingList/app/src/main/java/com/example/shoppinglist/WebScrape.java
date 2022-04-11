@@ -36,9 +36,14 @@ public class WebScrape extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             itemName = extras.getString("ItemName");
+        } else{
+            itemName = "milk";
         }
 
-        ArrayList<WebScrapeItem> recyclerViewWeb = ActualScrape();
+        description_webscrape dw = new description_webscrape();
+        dw.execute();
+
+        ArrayList<WebScrapeItem> recyclerViewWeb = list;
 
         this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -47,7 +52,7 @@ public class WebScrape extends AppCompatActivity {
         adapter = new WebScrapeAdapter(recyclerViewWeb);
         this.recyclerViewWeb.setAdapter(adapter);
 
-        nextPage.setOnClickListener(new View.OnClickListener() {
+        /*nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 page++;
@@ -66,7 +71,7 @@ public class WebScrape extends AppCompatActivity {
 
                 }
             }
-        });
+        });*/
     }
 
     /*private ArrayList<WebScrapeItem> initCities() {
@@ -88,13 +93,7 @@ public class WebScrape extends AppCompatActivity {
         return list;
     }*/
 
-    private ArrayList<WebScrapeItem> ActualScrape(){
 
-        description_webscrape dw = new description_webscrape();
-        dw.execute();
-
-        return null;
-    }
 
 
     private class description_webscrape extends AsyncTask<Void, Void, Void> {
@@ -139,9 +138,7 @@ public class WebScrape extends AppCompatActivity {
 
 
 
-            //(theDescription);
 
-            //webImage.setImageURI(Uri.parse(thePicture));
         }
 
 
