@@ -60,12 +60,12 @@ public class WebScrape extends AppCompatActivity {
         return list;
     }*/
 
-    private  ArrayList<WebScrapeItem> ActualScrape(){
+    private ArrayList<WebScrapeItem> ActualScrape(){
         ArrayList<WebScrapeItem> list = new ArrayList<>();
         String item = "milk";
         int page = 1;
+        return list;
     }
-
     /*
 
 

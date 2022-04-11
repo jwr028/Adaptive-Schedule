@@ -51,4 +51,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
