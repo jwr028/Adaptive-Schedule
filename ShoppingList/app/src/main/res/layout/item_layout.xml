@@ -16,7 +16,7 @@
         >
         <!-- Removing checkbox for initial createlist Items -->
         <CheckBox
-            android:id="@+id/todoCheckBox"
+            android:id="@+id/itemCheckbox"
             android:layout_width="365dp"
             android:layout_height="wrap_content"
 

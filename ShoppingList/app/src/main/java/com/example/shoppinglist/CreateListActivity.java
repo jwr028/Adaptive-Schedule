@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.Utils.DataBaseHelper;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.shoppinglist.Adapter.ToDoAdapter;
@@ -43,8 +44,8 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     private ToDoAdapter tasksAdapter;
     private ListToDoAdapter listsAdapter;
     public TextView listName;
-    private FloatingActionButton addTaskButton;
-    private FloatingActionButton addItemButton;
+    private ExtendedFloatingActionButton addTaskButton;
+    private ExtendedFloatingActionButton addItemButton;
     private Button finishButton;
 
     //for toast
@@ -56,7 +57,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list);
-        Objects.requireNonNull(getSupportActionBar()).hide(); // this is the command to remove the name of the app at the top??
+        //Objects.requireNonNull(getSupportActionBar()).hide(); // this is the command to remove the name of the app at the top??
 
         db = new DataBaseHelper(this);
         //db.openDatabase(); database should only be opened within db methods?

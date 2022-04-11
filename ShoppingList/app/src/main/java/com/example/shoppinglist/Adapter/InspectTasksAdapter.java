@@ -30,6 +30,7 @@ import java.util.List;
 public class InspectTasksAdapter extends RecyclerView.Adapter<InspectTasksAdapter.ViewHolder> {
 
     private List<ToDoModel> todoList;
+
     private DataBaseHelper db;
     private TasksFragment fragment;
 
