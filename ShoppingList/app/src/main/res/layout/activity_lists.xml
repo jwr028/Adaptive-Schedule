@@ -7,14 +7,34 @@
 
     tools:context=".ListsActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:theme="@style/Theme.ShoppingList.AppBarOverlay">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:minHeight="?actionBarSize"
+            android:text="Lists"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:textSize="24sp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="560dp"
 
         android:layout_above="@+id/newListButton"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
         android:layout_marginBottom="53dp"
         android:nestedScrollingEnabled="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

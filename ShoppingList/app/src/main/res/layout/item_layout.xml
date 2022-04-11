@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:background="@color/teal_light"
+        android:background="@color/green_light"
         >
         <!-- Removing checkbox for initial createlist Items -->
         <CheckBox
@@ -20,10 +20,10 @@
             android:layout_width="365dp"
             android:layout_height="wrap_content"
 
-            android:buttonTint="@android:color/holo_blue_dark"
+            android:buttonTint="@android:color/holo_green_light"
             android:paddingStart="8dp"
 
-            tools:text="Stuff to do goes here."
+            tools:text="Stuff to get goes here."
             tools:textSize="20sp"
             />
 
