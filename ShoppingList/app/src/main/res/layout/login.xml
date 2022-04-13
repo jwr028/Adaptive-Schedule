@@ -41,8 +41,8 @@
         android:drawablePadding="5dp"
         android:hint="Username"
         android:padding="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +59,8 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,5 +92,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.586" />
+
+    <Button
+        android:id="@+id/loginBypass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Debug"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="651dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
