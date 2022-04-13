@@ -134,7 +134,8 @@ public class WebScrape extends AppCompatActivity {
                 e.printStackTrace();
             }
             elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
-            elementsImage = document.getElementsByTag("img");
+            //elementsImage = document.getElementsByTag("img");
+            elementsImage = document.getElementsByClass("relative overflow-hidden").tagName("img");
 
             /*
             String src;
