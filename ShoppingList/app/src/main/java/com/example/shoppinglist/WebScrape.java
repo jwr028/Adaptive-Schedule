@@ -26,6 +26,7 @@ public class WebScrape extends AppCompatActivity {
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
     private String itemName;
+    WebScrape thisVal = this;
 
     private Button nextPage;
     private Button previousPage;
@@ -50,7 +51,7 @@ public class WebScrape extends AppCompatActivity {
         ArrayList<WebScrapeItem> recyclerViewWeb;
         recyclerViewWeb = list;
 
-        this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+        thisVal.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
@@ -134,18 +135,11 @@ public class WebScrape extends AppCompatActivity {
                 e.printStackTrace();
             }
             elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
-            //elementsImage = document.getElementsByTag("img");
-            elementsImage = document.getElementsByClass("relative overflow-hidden").tagName("img");
-
-            /*
-            String src;
-            for (Element el : elementsImage){
-                src = el.absUrl("src");
-                Log.d("Image", src);
-            }
-            */
+            elementsImage = document.getElementsByClass("absolute top-0 left-0");
 
             int i = 0;
+            Log.d("size", String.valueOf(elementsText.size()));
+            Log.d("size", String.valueOf(elementsImage.size()));
             while (i < elementsText.size()) {
                 list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).attr("src")));
                 Log.d("Text", elementsText.eq(i).text());
@@ -153,13 +147,6 @@ public class WebScrape extends AppCompatActivity {
                 Log.d("Placeholder", " ");
                 i++;
             }
-            /*for (int i = 0; i<10; i++) {
-                list.add(elementsText.eq(i).text());
-                //thePicture = elementsImage.eq(0).attr("src_set");
-            }*/
-
-
-
             return null;
         }
 
@@ -168,7 +155,12 @@ public class WebScrape extends AppCompatActivity {
 
             Log.d("Text", String.valueOf(list.size()));
             //Log.d("Text", list.toString());
+            thisVal.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(thisVal);
+            thisVal.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
+            adapter = new WebScrapeAdapter(list);
+            thisVal.recyclerViewWeb.setAdapter(adapter);
         }
 
 

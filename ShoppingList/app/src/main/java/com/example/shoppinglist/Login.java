@@ -7,6 +7,7 @@ import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import org.w3c.dom.Text;
 
 
 public class Login extends AppCompatActivity {
+
+    private Button loginBypass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -68,6 +71,15 @@ public class Login extends AppCompatActivity {
                 }
             });
 
+        });
+
+        loginBypass = findViewById(R.id.loginBypass);
+        loginBypass.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               startActivity(new Intent(getApplicationContext(), ListsActivity.class));
+               finish();
+           }
         });
 
         startRegister.setOnClickListener(new View.OnClickListener() {
