@@ -95,4 +95,13 @@
 
         android:textSize="34sp" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"
+        android:text="Swipe to edit or delete." />
+
 </RelativeLayout>

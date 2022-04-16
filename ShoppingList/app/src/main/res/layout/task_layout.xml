@@ -19,13 +19,12 @@
             android:id="@+id/todoCheckBox"
             android:layout_width="365dp"
             android:layout_height="wrap_content"
-
             android:buttonTint="@android:color/holo_blue_dark"
+
             android:paddingStart="8dp"
 
             tools:text="Stuff to do goes here."
-            tools:textSize="20sp"
-            />
+            tools:textSize="18sp" />
 
     </RelativeLayout>
 
