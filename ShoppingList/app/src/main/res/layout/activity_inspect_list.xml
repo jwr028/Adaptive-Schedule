@@ -31,9 +31,10 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="573dp"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!--
     <TextView
         android:id="@+id/totalPrice"
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
         android:textAlignment="center"
         android:textSize="30sp"
         android:translationY="680dp" />
+        -->
 
     <!--
     <com.google.android.material.floatingactionbutton.FloatingActionButton

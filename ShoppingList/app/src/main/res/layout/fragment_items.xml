@@ -15,7 +15,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
         android:layout_width="match_parent"
-        android:layout_height="633dp" />
+        android:layout_height="666dp" />
 
     <Button
         android:id="@+id/launch"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="51dp"
+        android:layout_marginBottom="12dp"
         android:layout_weight="1"
         android:text="launch Navigation" />
 
