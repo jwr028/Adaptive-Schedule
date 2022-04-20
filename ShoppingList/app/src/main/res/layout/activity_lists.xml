@@ -32,22 +32,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="455dp"
+        android:layout_height="584dp"
 
         android:layout_above="@+id/newListButton"
-        android:layout_marginBottom="53dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="29dp"
         android:nestedScrollingEnabled="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <Button
         android:id="@+id/newListButton"
-        android:layout_width="346dp"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="9dp"
         android:text="New List!" />
 
     <Button
@@ -59,6 +62,16 @@
         android:layout_marginBottom="68dp"
         android:text="clear" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="122dp"
+        android:text="Swipe a list to edit name or delete." />
+
+    <!--
     <Button
         android:id="@+id/specifyButton"
         android:layout_width="108dp"
@@ -70,6 +83,7 @@
         android:layout_marginEnd="151dp"
         android:layout_marginBottom="32dp"
         android:text="Button" />
+        -->
 
 
 </RelativeLayout>

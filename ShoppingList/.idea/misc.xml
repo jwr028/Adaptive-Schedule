@@ -12,6 +12,7 @@
         <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_items.xml" value="0.13020833333333334" />
         <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_tasks.xml" value="0.20878623188405798" />
         <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/list_entry_layout.xml" value="0.13020833333333334" />
+        <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/login.xml" value="0.175" />
         <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/new_item.xml" value="0.20878623188405798" />
         <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/new_task.xml" value="0.20878623188405798" />
         <entry key="..\:/CSC 405/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/web_scrape_list.xml" value="0.264" />
@@ -51,6 +52,7 @@
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/fragment_tasks.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/item_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/list_entry_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/login.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/new_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/new_name.xml" value="0.2265625" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/new_task.xml" value="0.35260416666666666" />
@@ -60,7 +62,6 @@
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/task_layout.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/web_scrape_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/caleb/OneDrive/Documents/GitHub/Adaptive-Schedule/ShoppingList/app/src/main/res/layout/web_scrape_specify.xml" value="0.36666666666666664" />
-        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.114" />
         <entry key="app/src/main/res/layout/login.xml" value="0.16576086956521738" />
         <entry key="app/src/main/res/layout/register_user.xml" value="0.10260416666666666" />
       </map>

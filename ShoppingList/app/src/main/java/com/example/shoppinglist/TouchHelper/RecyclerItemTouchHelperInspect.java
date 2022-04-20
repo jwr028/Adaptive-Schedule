@@ -1,7 +1,7 @@
-package com.example.shoppinglist;
-
+package com.example.shoppinglist.TouchHelper;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,23 +14,23 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shoppinglist.Adapter.InspectItemsAdapter;
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
-import com.example.shoppinglist.Adapter.ToDoAdapter;
+import com.example.shoppinglist.ItemsFragment;
+import com.example.shoppinglist.ListsActivity;
+import com.example.shoppinglist.PlaceholderActivity;
+import com.example.shoppinglist.R;
+import com.example.shoppinglist.WebScrape;
 
-// class used for handling swiping on main list activity
-public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback {
+// USED IN INSPECT LIST ITEM fragment
+public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallback{
 
     //private ToDoAdapter adapter;
-    private ListToDoAdapter listAdapter;
+    private InspectItemsAdapter itemsAdapter;
 
-    //public RecyclerItemTouchHelper(ToDoAdapter adapter) {
-    //    super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-    //    this.adapter = adapter;
-    //}
-    //  add another constructor? (will delete if causes issues)
-    public RecyclerItemTouchHelperLists(ListToDoAdapter listAdapter) {
+    public RecyclerItemTouchHelperInspect(InspectItemsAdapter itemsAdapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-        this.listAdapter = listAdapter;
+        this.itemsAdapter = itemsAdapter;
     }
 
     @Override
@@ -40,28 +40,48 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
 
     @Override
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+        // used for specify
         final int position = viewHolder.getAdapterPosition();
+         String itemName = itemsAdapter.todoList.get(position).getTask();
+
         if (direction == ItemTouchHelper.LEFT) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(listAdapter.getContext());
-            builder.setTitle("Delete Task");
-            builder.setMessage("Are you sure you want to delete this List?");
+            // EMPTY atm, might make an edit function
+            itemsAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+
+        } else {
+            // SWIPE RIGHT
+            AlertDialog.Builder builder = new AlertDialog.Builder(itemsAdapter.getContext());
+            builder.setTitle("Specify Item");
+            builder.setMessage("Search for specific item?");
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            listAdapter.deleteList(position);
+                            // INSERT SPECIFY HERE ///////////////////////////////////////////////////////////////
+                            itemsAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+
+                            //itemName = ItemsFragment.itemList.get(position).getTask();
+                            Intent intent = new Intent(itemsAdapter.getContext(), WebScrape.class);
+                            intent.putExtra("ItemName", itemName);
+                            itemsAdapter.getContext().startActivity(intent);
+
+                            /*
+                            itemName = itemList.get(position).getTask();
+                            Intent intent = new Intent(getActivity(), WebScrape.class);
+                            intent.putExtra("ItemName", itemName);
+                            startActivity(intent);
+
+                             */
                         }
                     });
             builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    itemsAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
                 }
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-        } else {
-            listAdapter.editNameOfList(position);
         }
     }
 
@@ -76,10 +96,10 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
         int backgroundCornerOffset = 20;
 
         if (dX > 0) {
-            icon = ContextCompat.getDrawable(listAdapter.getContext(), R.drawable.ic_baseline_edit);
-            background = new ColorDrawable(ContextCompat.getColor(listAdapter.getContext(), R.color.colorPrimaryDark));
+            icon = ContextCompat.getDrawable(itemsAdapter.getContext(), R.drawable.ic_baseline_edit);
+            background = new ColorDrawable(ContextCompat.getColor(itemsAdapter.getContext(), R.color.colorPrimaryDark));
         } else {
-            icon = ContextCompat.getDrawable(listAdapter.getContext(), R.drawable.ic_baseline_delete);
+            icon = ContextCompat.getDrawable(itemsAdapter.getContext(), R.drawable.ic_baseline_delete);
             background = new ColorDrawable(Color.RED);
         }
 
@@ -109,4 +129,5 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
         background.draw(c);
         icon.draw(c);
     }
+
 }

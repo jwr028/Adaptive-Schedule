@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.Debug;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import com.example.shoppinglist.Adapter.InspectItemsAdapter;
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Adapter.ToDoAdapter;
 import com.example.shoppinglist.Model.ToDoModel;
+import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelperInspect;
 import com.example.shoppinglist.Utils.DataBaseHelper;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
     private RecyclerView itemsRecyclerView;
     private InspectItemsAdapter itemsAdapter;
     //private int listID;
-    private List<ToDoModel> itemList;
+    public List<ToDoModel> itemList;
     private List<ToDoModel> filteredItemList;
     public InspectListActivity inspectListActivity;
     private String itemName;
@@ -44,8 +46,6 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
 
         // declare activity to access listID variable
         inspectListActivity = (InspectListActivity) getActivity();
@@ -60,6 +60,11 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         // this needs 3 arguments to accommodate for click listener
         InspectItemsAdapter itemsAdapter = new InspectItemsAdapter(db,ItemsFragment.this, this);
         itemsRecyclerView.setAdapter(itemsAdapter);
+
+        // SWIPING HELPER
+        // DECLARATIONS FOR SWIPING
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelperInspect(itemsAdapter));
+        itemTouchHelper.attachToRecyclerView(itemsRecyclerView);
 
         // fetches items and displays them
         // needs to be unique function that is only ITEMS of SELECTED LIST
@@ -93,14 +98,11 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
             }
         });
         ////////////////////////////////////////////////////////////////////////////////////////
-
-
         return view;
     }
 
-    
-
     // clicking on items (has placeholder)
+    // this is gonna be overridden by checkbox
     @Override
     public void onItemClick(int position){
         //Log.d(TAG, "onListClick: clicked");
