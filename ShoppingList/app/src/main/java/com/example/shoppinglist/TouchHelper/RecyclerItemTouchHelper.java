@@ -1,4 +1,4 @@
-package com.example.shoppinglist;
+package com.example.shoppinglist.TouchHelper;
 
 
 import android.content.DialogInterface;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Adapter.ToDoAdapter;
+import com.example.shoppinglist.R;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 

@@ -29,10 +29,10 @@ import java.util.List;
 
 public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapter.ViewHolder> {
 
-    private List<ToDoModel> todoList;
+    public List<ToDoModel> todoList;
     private OnItemListener mOnItemListener;
     private DataBaseHelper db;
-    private ItemsFragment fragment;
+    public ItemsFragment fragment;
 
     public InspectItemsAdapter(DataBaseHelper db, ItemsFragment fragment, OnItemListener onItemListener) {
         this.db = db;
@@ -60,11 +60,11 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
         //View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout, parent, false);
         // need to distinguish layouts with respective colors
         if (viewType == 1) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
             return new ViewHolder(itemView,mOnItemListener);
         }
         else {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout_green, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
             return new ViewHolder(itemView,mOnItemListener);
         }
 
@@ -77,6 +77,7 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
 
         final ToDoModel item = todoList.get(position);
         holder.task.setText(item.getTask());
+
 
         //holder.task.setChecked(toBoolean(item.getStatus()));
 
@@ -108,16 +109,19 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
         notifyItemRemoved(position);
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // (Caleb) removed checkbox check for entry layout
-        //CheckBox task;
-        TextView task;
+
+        // uses checkbox for new layout
+        CheckBox task;
+        //TextView task;
         OnItemListener onItemListener;
 
         ViewHolder(View view, OnItemListener onItemListener) {
             super(view);
-            task = view.findViewById(R.id.taskText);
+            // changing this for checkbox
+            //task = view.findViewById(R.id.taskText);
+            task = view.findViewById(R.id.itemCheckbox);
             this.onItemListener = onItemListener;
 
             view.setOnClickListener(this);

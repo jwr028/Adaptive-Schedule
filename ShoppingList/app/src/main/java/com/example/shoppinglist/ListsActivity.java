@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
-import com.example.shoppinglist.Adapter.ToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
+import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelperLists;
 import com.example.shoppinglist.Utils.DataBaseHelper;
 
 import java.util.Collections;
@@ -30,7 +29,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
 
     private Button newListButton;
     private Button debugButton;
-    private Button specifyButton;
+    //private Button specifyButton;
 
     private List<ParentToDoModel> listOfLists;
 
@@ -56,19 +55,18 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         listsAdapter = new ListToDoAdapter(db,ListsActivity.this, this);
         listsRecyclerView.setAdapter(listsAdapter);
 
+        // DECLARATIONS FOR SWIPING
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelperLists(listsAdapter));
         itemTouchHelper.attachToRecyclerView(listsRecyclerView);
 
         newListButton = findViewById(R.id.newListButton);
         debugButton = findViewById(R.id.debugButton);
-        specifyButton = findViewById(R.id.specifyButton);
-
+        //specifyButton = findViewById(R.id.specifyButton);
 
         // fetches items and displays them
         listOfLists = db.getAllLists();
         Collections.reverse(listOfLists); // newest on top
         listsAdapter.setLists(listOfLists);
-
 
         // NEW LIST BUTTON FUNCTION
         newListButton.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +85,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
             }
         });
 
+        /*
         specifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +93,8 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
                 //listsRecyclerView.notifyDataSetChanged(); // need to look into this function
             }
         });
+
+         */
 
     }
 
