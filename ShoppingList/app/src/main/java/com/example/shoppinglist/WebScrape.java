@@ -1,5 +1,6 @@
 package com.example.shoppinglist;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class WebScrape extends AppCompatActivity {
+public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener{
 
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
@@ -55,7 +56,7 @@ public class WebScrape extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
-        adapter = new WebScrapeAdapter(recyclerViewWeb);
+        adapter = new WebScrapeAdapter(recyclerViewWeb, this);
         this.recyclerViewWeb.setAdapter(adapter);
 
 
@@ -86,6 +87,20 @@ public class WebScrape extends AppCompatActivity {
         });
     }
 
+
+    //clicking on WebScrapes
+    @Override
+    public void onWebScrapeClick(int position) {
+        //Log.d(TAG, "onListClick: clicked");
+        //listOfLists.get(position); // will be used to load proper info in list inspection
+        // get parentID to pass to InspectActivity
+        //listID = listOfLists.get(position).getId();
+        Intent intent = new Intent(this, PlaceholderActivity.class);
+        //intent.putExtra("listID",listID);
+        startActivity(intent);
+    }
+
+
     /*private ArrayList<WebScrapeItem> initCities() {
         ArrayList<WebScrapeItem> list = new ArrayList<>();
 
@@ -104,8 +119,6 @@ public class WebScrape extends AppCompatActivity {
 
         return list;
     }*/
-
-
 
 
     private class description_webscrape extends AsyncTask<Void, Void, Void> {
@@ -159,10 +172,10 @@ public class WebScrape extends AppCompatActivity {
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(thisVal);
             thisVal.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
-            adapter = new WebScrapeAdapter(list);
+            // im not sure how to access the onWebScrape from here
+            //adapter = new WebScrapeAdapter(list, this);
             thisVal.recyclerViewWeb.setAdapter(adapter);
         }
-
 
     }
 

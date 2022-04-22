@@ -113,11 +113,11 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
     }
 
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // (Caleb) removed checkbox check for entry layout
         //CheckBox task;
         TextView name;
+
         OnListListener onListListener;
 
         ViewHolder(View view, OnListListener onListListener) {

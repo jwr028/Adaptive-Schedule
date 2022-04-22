@@ -20,22 +20,24 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
 
     private ArrayList<WebScrapeItem> recyclerViewWeb;
 
-    public WebScrapeAdapter(ArrayList<WebScrapeItem> recyclerViewWeb){
+    private OnWebScrapeListener mOnWebScrapeListener;
+
+    public WebScrapeAdapter(ArrayList<WebScrapeItem> recyclerViewWeb, OnWebScrapeListener onWebScrapeListener){
         this.recyclerViewWeb = recyclerViewWeb;
+
+        this.mOnWebScrapeListener = onWebScrapeListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.web_scrape_list, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v,mOnWebScrapeListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WebScrapeItem item = recyclerViewWeb.get(position);
-
-
 
         holder.getTextView().setText(item.getItemName());
         Picasso.get().load(item.getImageURL()).into(holder.getImageView());
@@ -51,12 +53,14 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public final View view;
         public final TextView itemName;
         public final ImageView image;
 
-        public ViewHolder(View view) {
+        OnWebScrapeListener onWebScrapeListener;
+
+        public ViewHolder(View view, OnWebScrapeListener onWebscrapeListener) {
             super(view);
             this.view = view;
             itemName = view.findViewById(R.id.webText);
@@ -70,5 +74,16 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
         public ImageView getImageView(){
             return image;
         }
+
+        @Override
+        public void onClick(View view)
+        {
+            onWebScrapeListener.onWebScrapeClick(getAdapterPosition());
+        }
+    }
+
+    // detect clicking WebScrapes
+    public interface OnWebScrapeListener{
+        void onWebScrapeClick(int position);
     }
 }
