@@ -121,6 +121,7 @@ public class WebScrape extends AppCompatActivity {
             org.jsoup.nodes.Document document = null;
             org.jsoup.select.Elements elementsText;
             org.jsoup.select.Elements elementsImage;
+            org.jsoup.select.Elements elementsID;
 
             String url = null;
             if (page == 1){
@@ -136,6 +137,9 @@ public class WebScrape extends AppCompatActivity {
             }
             elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
             elementsImage = document.getElementsByClass("absolute top-0 left-0");
+            //elementsID = document.getElementsByClass("sans-serif mid-gray relative flex flex-column w-100 ");
+            //elementsID = document.getElementsByTag("data-item-id");
+            elementsID = document.getElementsByAttribute("data-item-id");
 
             int i = 0;
             Log.d("size", String.valueOf(elementsText.size()));
@@ -144,6 +148,7 @@ public class WebScrape extends AppCompatActivity {
                 list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).attr("src")));
                 Log.d("Text", elementsText.eq(i).text());
                 Log.d("Image", elementsImage.eq(i).attr("src"));
+                Log.d("id", elementsID.eq(i).attr("data-item-id"));
                 Log.d("Placeholder", " ");
                 i++;
             }
