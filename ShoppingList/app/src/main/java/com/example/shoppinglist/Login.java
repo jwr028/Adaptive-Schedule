@@ -23,6 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
@@ -33,6 +35,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
 
 
 public class Login extends AppCompatActivity {
@@ -66,19 +70,11 @@ public class Login extends AppCompatActivity {
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
         if(googleSignInAccount != null){
-            FirebaseAuth.getInstance().signOut();
-            signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    startActivity(new Intent(getApplicationContext(), Login.class));
-                }
-            });
+            signOut();
         }
 
         if(fAuth.getCurrentUser() != null){
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), Login.class));
-            finish();
+            signOut();
         }
 
         loginbtn.setOnClickListener(view -> {
@@ -134,6 +130,17 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    private void signOut() {
+        fAuth.signOut();
+
+        signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(Login.this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), Login.class));
+            }
+        });
+    }
     private void signIn(){
         Intent signInIntent = signInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -163,12 +170,41 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     FirebaseUser user = fAuth.getCurrentUser();
+                    boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+                    if(isNew){
+
+                    }
                     startActivity(new Intent(getApplicationContext(), ListsActivity.class));
                 } else {
                     Toast.makeText(Login.this, "User does not exists!", Toast.LENGTH_SHORT).show();
                 }
             }
 
+        });
+    }
+
+    private void addNewGoogleUser(FirebaseFirestore fStore, FirebaseUser user){
+        final String email = user.getEmail().toString();
+        final String userID = user.getUid();
+        final String[] fullName = user.getDisplayName().split("\\s+");
+        final String firstName = fullName[0];
+        final String lastName = fullName[fullName.length -1];
+
+        HashMap<String, Object> googleUser = new HashMap<>();
+        googleUser.put("firstName", firstName);
+        googleUser.put("lastName", lastName);
+        googleUser.put("email", email);
+
+        fStore.collection("users").document(userID).set(googleUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Google user has been successfully added!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "ERROR! COULD NOT BE ADDED!");
+            }
         });
     }
 }
