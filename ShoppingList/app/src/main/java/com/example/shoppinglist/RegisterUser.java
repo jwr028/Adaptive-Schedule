@@ -33,7 +33,7 @@ public class RegisterUser extends AppCompatActivity {
     EditText firstName, lastName, rEmail, rPassword, rConfirmPassword;
     TextView backToLogin;
     Button accountRegister;
-    FirebaseAuth fAuth;
+    private FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     ProgressBar progressBar;
     String userID;

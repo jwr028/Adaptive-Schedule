@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -122,6 +123,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        // If the sign in google button is clicked, have user signed in.
         signInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,21 +132,30 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void signOut() {
-        fAuth.signOut();
-
-        signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(Login.this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), Login.class));
-            }
-        });
-    }
+    // Creating the sign in for Google Accounts.
     private void signIn(){
         Intent signInIntent = signInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
+    }
+
+    // Creating the sign out for all Accounts.
+    private void signOut(){
+        // Firebase signout
+        fAuth.getInstance().signOut();
+
+        //Google client sign out
+        signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(Login.this, "You have been signed out!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Login.class));
+                } else {
+                    Log.w(TAG, "Error signing out!");
+                }
+            }
+        });
     }
 
     @Override
@@ -172,23 +183,24 @@ public class Login extends AppCompatActivity {
                     FirebaseUser user = fAuth.getCurrentUser();
                     boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
                     if(isNew){
-
+                        Log.d(TAG, "New google user, adding to database.");
+                        final String userID = user.getUid();
+                        addNewGoogleUser(fStore, user);
                     }
                     startActivity(new Intent(getApplicationContext(), ListsActivity.class));
                 } else {
                     Toast.makeText(Login.this, "User does not exists!", Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
     }
 
     private void addNewGoogleUser(FirebaseFirestore fStore, FirebaseUser user){
-        final String email = user.getEmail().toString();
         final String userID = user.getUid();
+        final String email = user.getEmail().toString();
         final String[] fullName = user.getDisplayName().split("\\s+");
         final String firstName = fullName[0];
-        final String lastName = fullName[fullName.length -1];
+        final String lastName = fullName[fullName.length-1];
 
         HashMap<String, Object> googleUser = new HashMap<>();
         googleUser.put("firstName", firstName);
@@ -198,12 +210,12 @@ public class Login extends AppCompatActivity {
         fStore.collection("users").document(userID).set(googleUser).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Log.d(TAG, "Google user has been successfully added!");
+                Log.d(TAG, "Google user successfully added.");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "ERROR! COULD NOT BE ADDED!");
+                Log.w(TAG, "Google user is either already added or could not be added!", e);
             }
         });
     }
