@@ -1,6 +1,7 @@
 package com.example.shoppinglist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,11 +11,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.Toolbar;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelperLists;
 import com.example.shoppinglist.Utils.DataBaseHelper;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +36,10 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
 
     private List<ParentToDoModel> listOfLists;
 
+    // The navigation bar buttons
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
     @Override
     public void onResume(){
         super.onResume();
