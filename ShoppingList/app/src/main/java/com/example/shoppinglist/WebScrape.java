@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener{
+public class WebScrape extends AppCompatActivity{
 
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
@@ -56,7 +56,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
-        adapter = new WebScrapeAdapter(recyclerViewWeb, this);
+        adapter = new WebScrapeAdapter(recyclerViewWeb);
         this.recyclerViewWeb.setAdapter(adapter);
 
 
@@ -87,41 +87,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         });
     }
 
-
-    //clicking on WebScrapes
-    @Override
-    public void onWebScrapeClick(int position) {
-        //Log.d(TAG, "onListClick: clicked");
-        //listOfLists.get(position); // will be used to load proper info in list inspection
-        // get parentID to pass to InspectActivity
-        //listID = listOfLists.get(position).getId();
-        Intent intent = new Intent(this, PlaceholderActivity.class);
-        //intent.putExtra("listID",listID);
-        startActivity(intent);
-    }
-
-
-    /*private ArrayList<WebScrapeItem> initCities() {
-        ArrayList<WebScrapeItem> list = new ArrayList<>();
-
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
-
-        return list;
-    }*/
-
-
-    private class description_webscrape extends AsyncTask<Void, Void, Void> {
+    private class description_webscrape extends AsyncTask<Void, Void, Void> implements WebScrapeAdapter.OnWebScrapeListener {
 
         @Override
         protected void onPreExecute() {
@@ -178,11 +144,21 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
             thisVal.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
             // im not sure how to access the onWebScrape from here
-            //adapter = new WebScrapeAdapter(list, this);
+            adapter = new WebScrapeAdapter(list, this);
             thisVal.recyclerViewWeb.setAdapter(adapter);
         }
 
+        @Override
+        public void onWebScrapeClick(int position) {
+            Log.d("as", "onListClick: clicked");
+            //listOfLists.get(position); // will be used to load proper info in list inspection
+            // get parentID to pass to InspectActivity
+            //listID = listOfLists.get(position).getId();
+            Intent intent = new Intent(thisVal, PlaceholderActivity.class);
+            //intent.putExtra("listID",listID);
+            startActivity(intent);
+        }
     }
-    
+
 }
 
