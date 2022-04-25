@@ -42,8 +42,6 @@ public class InspectTasksAdapter extends RecyclerView.Adapter<InspectTasksAdapte
         this.fragment = fragment;
     }
 
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,7 +54,6 @@ public class InspectTasksAdapter extends RecyclerView.Adapter<InspectTasksAdapte
         return new ViewHolder(itemView);
         
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
