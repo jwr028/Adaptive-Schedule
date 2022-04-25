@@ -20,6 +20,9 @@
             android:layout_width="365dp"
             android:layout_height="wrap_content"
 
+            android:layoutDirection="rtl"
+            android:gravity="center"
+
             android:buttonTint="@android:color/holo_green_light"
             android:paddingStart="8dp"
 

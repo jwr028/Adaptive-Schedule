@@ -21,6 +21,9 @@
             android:layout_height="wrap_content"
             android:buttonTint="@android:color/holo_blue_dark"
 
+            android:layoutDirection="rtl"
+            android:gravity="center"
+
             android:paddingStart="8dp"
 
             tools:text="Stuff to do goes here."

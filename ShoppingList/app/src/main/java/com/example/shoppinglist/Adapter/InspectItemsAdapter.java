@@ -34,6 +34,9 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
     private DataBaseHelper db;
     public ItemsFragment fragment;
 
+    // need to create onclick listener for checkbox to update database
+    private CheckBox checkBox;
+
     public InspectItemsAdapter(DataBaseHelper db, ItemsFragment fragment, OnItemListener onItemListener) {
         this.db = db;
         this.fragment = fragment;
@@ -57,14 +60,24 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+
+
         //View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_entry_layout, parent, false);
         // need to distinguish layouts with respective colors
         if (viewType == 1) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+
+            // declaration for onclick listener
+            checkBox = itemView.findViewById(R.id.itemCheckbox);
+
             return new ViewHolder(itemView,mOnItemListener);
         }
         else {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+
+            // declaration for onclick listener
+            checkBox = itemView.findViewById(R.id.itemCheckbox);
+
             return new ViewHolder(itemView,mOnItemListener);
         }
 
@@ -76,10 +89,26 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
         db.openDatabase();
 
         final ToDoModel item = todoList.get(position);
+
+        // task refers to checkbox text and box here
         holder.task.setText(item.getTask());
+
+        // this sets the checkbox CHECKED if status == 1
+        holder.task.setChecked(toBoolean(item.getStatus()));
 
 
         //holder.task.setChecked(toBoolean(item.getStatus()));
+        // trigger function on checkbox click
+        //checkBox = findViewById (can't do this in fragment)
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //openCreateListActivity();
+                // get adapter position?
+
+                updateStatus(holder.getAbsoluteAdapterPosition());
+            }
+        });
 
     }
 
@@ -100,6 +129,18 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
     public void setTasks(List<ToDoModel> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged();
+    }
+
+    // called on checkbox click (declared in XML)
+    public void updateStatus(int position) {
+        ToDoModel item = todoList.get(position);
+        // if status is 0, set to 1, and vice versa
+        if (item.getStatus() == 0) {
+            db.updateStatus(item.getId(), 1);
+        }
+        else {
+            db.updateStatus(item.getId(), 0);
+        }
     }
 
     public void deleteItem(int position) {

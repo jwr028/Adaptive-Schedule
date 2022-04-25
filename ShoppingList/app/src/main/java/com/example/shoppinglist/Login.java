@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -23,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
@@ -33,6 +36,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
 
 
 public class Login extends AppCompatActivity {
@@ -66,19 +71,11 @@ public class Login extends AppCompatActivity {
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
         if(googleSignInAccount != null){
-            FirebaseAuth.getInstance().signOut();
-            signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    startActivity(new Intent(getApplicationContext(), Login.class));
-                }
-            });
+            signOut();
         }
 
         if(fAuth.getCurrentUser() != null){
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), Login.class));
-            finish();
+            signOut();
         }
 
         loginbtn.setOnClickListener(view -> {
@@ -126,6 +123,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        // If the sign in google button is clicked, have user signed in.
         signInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,10 +132,30 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    // Creating the sign in for Google Accounts.
     private void signIn(){
         Intent signInIntent = signInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
+    }
+
+    // Creating the sign out for all Accounts.
+    private void signOut(){
+        // Firebase signout
+        fAuth.getInstance().signOut();
+
+        //Google client sign out
+        signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(Login.this, "You have been signed out!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Login.class));
+                } else {
+                    Log.w(TAG, "Error signing out!");
+                }
+            }
+        });
     }
 
     @Override
@@ -163,12 +181,42 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     FirebaseUser user = fAuth.getCurrentUser();
+                    boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+                    if(isNew){
+                        Log.d(TAG, "New google user, adding to database.");
+                        final String userID = user.getUid();
+                        addNewGoogleUser(fStore, user);
+                    }
                     startActivity(new Intent(getApplicationContext(), ListsActivity.class));
                 } else {
                     Toast.makeText(Login.this, "User does not exists!", Toast.LENGTH_SHORT).show();
                 }
             }
+        });
+    }
 
+    private void addNewGoogleUser(FirebaseFirestore fStore, FirebaseUser user){
+        final String userID = user.getUid();
+        final String email = user.getEmail().toString();
+        final String[] fullName = user.getDisplayName().split("\\s+");
+        final String firstName = fullName[0];
+        final String lastName = fullName[fullName.length-1];
+
+        HashMap<String, Object> googleUser = new HashMap<>();
+        googleUser.put("firstName", firstName);
+        googleUser.put("lastName", lastName);
+        googleUser.put("email", email);
+
+        fStore.collection("users").document(userID).set(googleUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Google user successfully added.");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Google user is either already added or could not be added!", e);
+            }
         });
     }
 }
