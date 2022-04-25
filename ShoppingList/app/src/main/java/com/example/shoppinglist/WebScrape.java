@@ -183,24 +183,6 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         }
 
     }
-
-    /*public String Scrape(){
-        org.jsoup.nodes.Document document = null;
-        String url = null;
-        if (page == 1){
-            url = String.format("https://www.walmart.com/search?q=%s&affinityOverride=store_led",item);
-        } else {
-            url = String.format("https://www.walmart.com/search?q=%s&affinityOverride=store_led&page=%d",item, page);
-        }
-
-        try {
-            document = Jsoup.connect(url).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        org.jsoup.select.Elements elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
-        org.jsoup.select.Elements elementsImage = document.getElementsByClass("absolute top-0 left-0");
-        return elementsText.text();
-    }*/
+    
 }
 
