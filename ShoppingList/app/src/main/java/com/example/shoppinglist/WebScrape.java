@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class WebScrape extends AppCompatActivity{
+public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener {
 
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
@@ -33,6 +33,7 @@ public class WebScrape extends AppCompatActivity{
     private Button previousPage;
     private int page = 1;
     ArrayList<WebScrapeItem> list = new ArrayList<>();
+    private boolean executing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,7 @@ public class WebScrape extends AppCompatActivity{
         description_webscrape dw = new description_webscrape();
         dw.execute();
 
-        ArrayList<WebScrapeItem> recyclerViewWeb;
-        recyclerViewWeb = list;
-
-        thisVal.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+        this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
@@ -64,11 +62,12 @@ public class WebScrape extends AppCompatActivity{
         nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                page++;
-                list.clear();
-                description_webscrape aw = new description_webscrape();
-                aw.execute();
-
+                if (executing == false) {
+                    page++;
+                    list.clear();
+                    description_webscrape aw = new description_webscrape();
+                    aw.execute();
+                }
             }
         });
 
@@ -76,7 +75,7 @@ public class WebScrape extends AppCompatActivity{
         previousPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (page != 1) {
+                if (page != 1 && executing == false) {
                     page--;
                     list.clear();
                     description_webscrape aw = new description_webscrape();
@@ -87,11 +86,37 @@ public class WebScrape extends AppCompatActivity{
         });
     }
 
-    private class description_webscrape extends AsyncTask<Void, Void, Void> implements WebScrapeAdapter.OnWebScrapeListener {
+    public void WebScrapeDone() {
+        Log.d("Text", String.valueOf(list.size()));
+        //Log.d("Text", list.toString());
+        this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        this.recyclerViewWeb.setLayoutManager(mLayoutManager);
+
+        // im not sure how to access the onWebScrape from here
+        adapter = new WebScrapeAdapter(list, this);
+        this.recyclerViewWeb.setAdapter(adapter);
+        executing = false;
+    }
+
+    @Override
+    public void onWebScrapeClick(int position) {
+        Log.d("as", "onListClick: clicked");
+        //listOfLists.get(position); // will be used to load proper info in list inspection
+        // get parentID to pass to InspectActivity
+        //listID = listOfLists.get(position).getId();
+        Intent intent = new Intent(this, PlaceholderActivity.class);
+        //intent.putExtra("listID",listID);
+        startActivity(intent);
+    }
+
+
+    private class description_webscrape extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            executing = true;
         }
 
         @Override
@@ -114,6 +139,7 @@ public class WebScrape extends AppCompatActivity{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
             elementsImage = document.getElementsByClass("absolute top-0 left-0");
             //elementsID = document.getElementsByClass("sans-serif mid-gray relative flex flex-column w-100 ");
@@ -136,28 +162,9 @@ public class WebScrape extends AppCompatActivity{
 
         @Override
         protected void onPostExecute(Void aVoid) {
-
-            Log.d("Text", String.valueOf(list.size()));
-            //Log.d("Text", list.toString());
-            thisVal.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(thisVal);
-            thisVal.recyclerViewWeb.setLayoutManager(mLayoutManager);
-
-            // im not sure how to access the onWebScrape from here
-            adapter = new WebScrapeAdapter(list, this);
-            thisVal.recyclerViewWeb.setAdapter(adapter);
+            WebScrapeDone();
         }
 
-        @Override
-        public void onWebScrapeClick(int position) {
-            Log.d("as", "onListClick: clicked");
-            //listOfLists.get(position); // will be used to load proper info in list inspection
-            // get parentID to pass to InspectActivity
-            //listID = listOfLists.get(position).getId();
-            Intent intent = new Intent(thisVal, PlaceholderActivity.class);
-            //intent.putExtra("listID",listID);
-            startActivity(intent);
-        }
     }
 
 }
