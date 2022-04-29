@@ -1,5 +1,6 @@
 package com.example.shoppinglist;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -8,15 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelperLists;
 import com.example.shoppinglist.Utils.DataBaseHelper;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Collections;
@@ -33,13 +38,10 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     private Button newListButton;
     private Button debugButton;
     //private Button specifyButton;
-
+    TextView title;
     private List<ParentToDoModel> listOfLists;
 
-    // The navigation bar buttons
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
+
     @Override
     public void onResume(){
         super.onResume();
@@ -55,7 +57,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         setContentView(R.layout.activity_lists);
 
         db = new DataBaseHelper(this);
-
+        
         listsRecyclerView = findViewById(R.id.listsRecyclerView);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
