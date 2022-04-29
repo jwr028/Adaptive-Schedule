@@ -107,6 +107,7 @@ public class Login extends AppCompatActivity {
         });
 
         loginBypass = findViewById(R.id.loginBypass);
+        loginBypass.setVisibility(View.INVISIBLE);
         loginBypass.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
