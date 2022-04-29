@@ -4,24 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start"
     tools:context=".ListsActivity">
 
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_menu"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/menu_profile"
-        android:layout_gravity="start"/>
-
-
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:theme="@style/Theme.ShoppingList.AppBarOverlay">
-
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:theme="@style/Theme.ShoppingList.AppBarOverlay"
+            android:id="@+id/appBar_Layout">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -53,33 +42,33 @@
         android:nestedScrollingEnabled="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <Button
-        android:id="@+id/newListButton"
-        android:layout_width="204dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="9dp"
-        android:text="New List!" />
+        <Button
+            android:id="@+id/newListButton"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="9dp"
+            android:text="New List!" />
 
-    <Button
-        android:id="@+id/debugButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="68dp"
-        android:text="clear" />
+        <Button
+            android:id="@+id/debugButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="68dp"
+            android:text="clear" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="122dp"
-        android:text="Swipe a list to edit name or delete." />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="122dp"
+            android:text="Swipe a list to edit name or delete." />
 
     <!--
     <Button
