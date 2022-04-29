@@ -56,7 +56,7 @@ public class WebScrape extends AppCompatActivity{
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
-        adapter = new WebScrapeAdapter(recyclerViewWeb);
+        //adapter = new WebScrapeAdapter(recyclerViewWeb);
         this.recyclerViewWeb.setAdapter(adapter);
 
 
