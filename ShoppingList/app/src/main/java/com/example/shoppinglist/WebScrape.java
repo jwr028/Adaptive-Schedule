@@ -29,8 +29,6 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
     private String itemName;
     WebScrape thisVal = this;
 
-    private Button nextPage;
-    private Button previousPage;
     private int page = 1;
     ArrayList<WebScrapeItem> list = new ArrayList<>();
     private boolean executing = false;
@@ -58,11 +56,11 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         this.recyclerViewWeb.setAdapter(adapter);
 
 
-        nextPage = findViewById(R.id.nextPage);
+        Button nextPage = findViewById(R.id.nextPage);
         nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (executing == false) {
+                if (!executing) {
                     page++;
                     list.clear();
                     description_webscrape aw = new description_webscrape();
@@ -71,11 +69,11 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
             }
         });
 
-        previousPage = findViewById(R.id.previousPage);
+        Button previousPage = findViewById(R.id.previousPage);
         previousPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (page != 1 && executing == false) {
+                if (page != 1 && !executing) {
                     page--;
                     list.clear();
                     description_webscrape aw = new description_webscrape();
@@ -140,6 +138,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
                 e.printStackTrace();
             }
 
+            assert document != null;
             elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
             elementsImage = document.getElementsByClass("absolute top-0 left-0");
             //elementsID = document.getElementsByClass("sans-serif mid-gray relative flex flex-column w-100 ");

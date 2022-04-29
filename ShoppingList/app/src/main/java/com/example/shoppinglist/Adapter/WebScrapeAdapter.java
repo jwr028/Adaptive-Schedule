@@ -33,6 +33,7 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.web_scrape_list, parent, false);
         return new ViewHolder(v,mOnWebScrapeListener);
+
     }
 
     @Override
