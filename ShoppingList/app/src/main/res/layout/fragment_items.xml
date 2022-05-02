@@ -27,4 +27,15 @@
         android:layout_weight="1"
         android:text="launch Navigation" />
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="122dp"
+        android:layout_marginBottom="63dp"
+        android:text="Swipe item right to specify" />
+
 </RelativeLayout>
