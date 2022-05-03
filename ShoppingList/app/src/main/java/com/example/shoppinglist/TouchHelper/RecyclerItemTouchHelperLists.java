@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAdapterPosition();
         int listID = listAdapter.listOfLists.get(position).getId();
+        String listName = listAdapter.listOfLists.get(position).getName();
 
         if (direction == ItemTouchHelper.LEFT) {
             AlertDialog.Builder builder = new AlertDialog.Builder(listAdapter.getContext());
@@ -82,7 +84,11 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
 
                             //itemName = ItemsFragment.itemList.get(position).getTask();
                             Intent intent = new Intent(listAdapter.getContext(), EditListActivity.class);
-                            intent.putExtra("listID", listID);
+                            Bundle extras = new Bundle();
+                            extras.putInt("listID",listID);
+                            extras.putString("listName",listName);
+                            intent.putExtras(extras);
+                            //intent.putExtra("listID", listID);
                             listAdapter.getContext().startActivity(intent);
 
                         }

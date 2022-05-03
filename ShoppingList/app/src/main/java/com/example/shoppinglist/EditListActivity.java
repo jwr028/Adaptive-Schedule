@@ -25,7 +25,7 @@ import com.example.shoppinglist.Model.ToDoModel;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: CANNOT ADD, CANNOT CHANGE LIST NAME, FINISH BUTTON NEEDS CHANGE
+// TODO: CANNOT ADD,  FINISH BUTTON NEEDS CHANGE
 
 public class EditListActivity extends AppCompatActivity implements DialogCloseListener {
 
@@ -39,7 +39,9 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
     private ExtendedFloatingActionButton addItemButton;
     private Button finishButton;
 
+    // extras
     public int listID;
+    public String listNameEx;
 
 
     private List<ToDoModel> taskList;
@@ -49,9 +51,11 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_list);
 
+        // EXTRAAAAAAAAAAS
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             listID = extras.getInt("listID");
+            listNameEx = extras.getString("listName");
         }
 
         db = new DataBaseHelper(this);
@@ -71,12 +75,9 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
         listName = findViewById(R.id.listName);
         finishButton = findViewById(R.id.finishButton);
 
-        // fetches items and displays them
-        /*
-        taskList = db.getAllNewTasks();
-        Collections.reverse(taskList); // newest on top
-        tasksAdapter.setTasks(taskList);
-         */
+        // set listName text to match
+        // listName = listNameEx
+        listName.setText(listNameEx);
 
         // need to put in EXTRA for ID
         taskList = db.getAllTasks(listID);
