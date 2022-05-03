@@ -66,6 +66,9 @@ public class WebScrapeAdapter extends RecyclerView.Adapter<WebScrapeAdapter.View
             this.view = view;
             itemName = view.findViewById(R.id.webText);
             image = view.findViewById(R.id.webImage);
+            this.onWebScrapeListener = onWebscrapeListener;
+
+            view.setOnClickListener(this);
         }
 
         public TextView getTextView(){

@@ -94,30 +94,17 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         adapter = new WebScrapeAdapter(list, this);
         this.recyclerViewWeb.setAdapter(adapter);
         executing = false;
-
-        recyclerViewWeb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("as", "onListClick: clicked");
-                //listOfLists.get(position); // will be used to load proper info in list inspection
-                // get parentID to pass to InspectActivity
-                //listID = listOfLists.get(position).getId();
-                Intent intent = new Intent();
-                //intent.putExtra("listID",listID);
-                //startActivity(intent);
-            }
-        });
     }
 
     @Override
     public void onWebScrapeClick(int position) {
         Log.d("as", "onListClick: clicked");
         //listOfLists.get(position); // will be used to load proper info in list inspection
-        // get parentID to pass to InspectActivity
+        //get parentID to pass to InspectActivity
         //listID = listOfLists.get(position).getId();
-        Intent intent = new Intent(this, PlaceholderActivity.class);
+        //Intent intent = new Intent(this, PlaceholderActivity.class);
         //intent.putExtra("listID",listID);
-        startActivity(intent);
+        //startActivity(intent);
     }
 
 
@@ -155,7 +142,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
             elementsImage = document.getElementsByClass("absolute top-0 left-0");
             //elementsID = document.getElementsByClass("sans-serif mid-gray relative flex flex-column w-100 ");
             //elementsID = document.getElementsByTag("data-item-id");
-            elementsID = document.getElementsByAttribute("data-item-id");
+            //elementsID = document.getElementsByAttribute("data-item-id");
 
             int i = 0;
             Log.d("size", String.valueOf(elementsText.size()));
@@ -164,7 +151,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
                 list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).attr("src")));
                 Log.d("Text", elementsText.eq(i).text());
                 Log.d("Image", elementsImage.eq(i).attr("src"));
-                Log.d("id", elementsID.eq(i).attr("data-item-id"));
+                //Log.d("id", elementsID.eq(i).attr("data-item-id"));
                 Log.d("Placeholder", " ");
                 i++;
             }
