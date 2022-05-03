@@ -1,6 +1,5 @@
 package com.example.shoppinglist.TouchHelper;
 
-
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,15 +14,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
-import com.example.shoppinglist.Adapter.ToDoAdapter;
+import com.example.shoppinglist.Adapter.EditAdapter;
 import com.example.shoppinglist.R;
 
-public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
+public class RecyclerItemTouchHelperEdit extends ItemTouchHelper.SimpleCallback {
 
-    private ToDoAdapter adapter;
-    //private ListToDoAdapter listAdapter;
+    private EditAdapter adapter;
 
-    public RecyclerItemTouchHelper(ToDoAdapter adapter) {
+    public RecyclerItemTouchHelperEdit(EditAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
     }

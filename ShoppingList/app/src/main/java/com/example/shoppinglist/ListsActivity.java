@@ -39,8 +39,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     private Button debugButton;
     //private Button specifyButton;
     TextView title;
-    private List<ParentToDoModel> listOfLists;
-
+    public List<ParentToDoModel> listOfLists;
 
     @Override
     public void onResume(){

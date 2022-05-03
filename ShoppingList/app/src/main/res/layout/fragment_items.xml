@@ -21,9 +21,11 @@
         android:id="@+id/launch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginBottom="14dp"
         android:layout_weight="1"
         android:text="launch Navigation" />
 

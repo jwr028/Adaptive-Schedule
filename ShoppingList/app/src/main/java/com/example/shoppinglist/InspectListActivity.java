@@ -41,7 +41,6 @@ public class InspectListActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
 
-
         /* placeholder button if we need it
         FloatingActionButton fab = binding.fab;
 

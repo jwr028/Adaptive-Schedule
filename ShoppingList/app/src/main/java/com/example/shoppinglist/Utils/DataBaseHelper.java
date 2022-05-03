@@ -227,12 +227,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     // used to fetch all items and tasks in a list (probably not used)
-    public List<ToDoModel> getAllTasks(){
+    public List<ToDoModel> getAllTasks(int id){
 
         List<ToDoModel> taskList = new ArrayList<>();
 
         // get data from database
-        String queryString = "SELECT * FROM " + TABLE_NAME; // will need to add on parent ID filter later !!!!!!!!!!!!!!
+        String queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " + PARENT_ID + "=" + id; // will need to add on parent ID filter later !!!!!!!!!!!!!!
         SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
 
         Cursor cursor = db.rawQuery(queryString,null);

@@ -65,13 +65,6 @@ public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallba
                             intent.putExtra("ItemName", itemName);
                             itemsAdapter.getContext().startActivity(intent);
 
-                            /*
-                            itemName = itemList.get(position).getTask();
-                            Intent intent = new Intent(getActivity(), WebScrape.class);
-                            intent.putExtra("ItemName", itemName);
-                            startActivity(intent);
-
-                             */
                         }
                     });
             builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
