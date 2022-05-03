@@ -42,6 +42,8 @@ public class AddNewTaskEdit extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
+
+        //extras?
     }
 
     @Nullable
@@ -129,7 +131,8 @@ public class AddNewTaskEdit extends BottomSheetDialogFragment {
                     task.setType("task"); //used to distinguish items and tasks
 
                     // need to set parent of new item so it appears in list
-                    //task.setParentID();
+                    task.setParentID(((EditListActivity)getActivity()).listID);
+                    task.setAge(1);
 
                     db.insertTask(task);
                 }

@@ -42,6 +42,8 @@ public class AddNewItemEdit extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
+
+
     }
 
     @Nullable
@@ -126,10 +128,12 @@ public class AddNewItemEdit extends BottomSheetDialogFragment {
                     // inserting the info for database
                     task.setTask(text);
                     task.setStatus(0);
+
                     task.setType("item"); // used to distinguish items and tasks
 
                     // need to set parent of new item so it appears in list
-                    //task.setParentID();
+                    task.setParentID(((EditListActivity)getActivity()).listID);
+                    task.setAge(1);
 
                     db.insertTask(task); // DB method to add entry to database
                 }
