@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         signInGoogle = findViewById(R.id.googleSignIn);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.WEB_CLIENT_ID))
                 .requestEmail   ()
                 .build();
 
@@ -107,7 +107,7 @@ public class Login extends AppCompatActivity {
         });
 
         loginBypass = findViewById(R.id.loginBypass);
-        loginBypass.setVisibility(View.INVISIBLE);
+        //loginBypass.setVisibility(View.INVISIBLE);
         loginBypass.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

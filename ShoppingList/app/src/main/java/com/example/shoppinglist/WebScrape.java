@@ -27,7 +27,6 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
     private String itemName;
-    WebScrape thisVal = this;
 
     private int page = 1;
     ArrayList<WebScrapeItem> list = new ArrayList<>();
@@ -95,6 +94,19 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         adapter = new WebScrapeAdapter(list, this);
         this.recyclerViewWeb.setAdapter(adapter);
         executing = false;
+
+        recyclerViewWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("as", "onListClick: clicked");
+                //listOfLists.get(position); // will be used to load proper info in list inspection
+                // get parentID to pass to InspectActivity
+                //listID = listOfLists.get(position).getId();
+                Intent intent = new Intent();
+                //intent.putExtra("listID",listID);
+                //startActivity(intent);
+            }
+        });
     }
 
     @Override
