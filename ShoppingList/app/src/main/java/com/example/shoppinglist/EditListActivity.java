@@ -90,7 +90,8 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
             @Override
             public void onClick(View v) {
 
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                AddNewTaskEdit.newInstance().show(getSupportFragmentManager(), AddNewTaskEdit.TAG);
+                // THESE NEED NEW INSTANCES (AddNewTaskEdit)
 
             }
         });
@@ -100,7 +101,8 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
             @Override
             public void onClick(View v) {
                 // duplicated the code for new task to separate new task and item
-                AddNewItem.newInstance().show(getSupportFragmentManager(), AddNewItem.TAG);
+                AddNewItemEdit.newInstance().show(getSupportFragmentManager(), AddNewItemEdit.TAG);
+                // replace with AddNewItemEdit
 
             }
         });
@@ -110,7 +112,7 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
             @Override
             public void onClick(View v) {
                 // duplicated the code for new task to separate new task and item
-                AddNewName.newInstance().show(getSupportFragmentManager(), AddNewName.TAG);
+                AddNewNameEdit.newInstance().show(getSupportFragmentManager(), AddNewNameEdit.TAG);
 
             }
         });
@@ -120,40 +122,19 @@ public class EditListActivity extends AppCompatActivity implements DialogCloseLi
             @Override
             public void onClick(View v) {
 
+                // EDIT version of this function just updates name of list instead of creating new one
+
+
                 // prevent creating empty list
                 if (tasksAdapter.getItemCount() != 0) {
                     // need code here to add LIST NAME to parent database before finishing and returning to List Activity screen
                     String text = listName.getText().toString(); // fetches TextView and sets as name in database
 
-                    // inserting a new list
-                    ParentToDoModel list = new ParentToDoModel();
-                    // inserting the info for database
-                    list.setName(text);
+                    // update list name with what is currently in the top textview
+                    db.updateListName(listID,text);
 
-                    db.insertList(list);
-                    // need to pull ID here?
-                    // need to set ID of new list to parentID of all list items currently displayed
-                    //int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
-                    int newListID = db.getLastInsert(); // method uses last_insert_rowid in SQlite
-
-                    int i = 0;
-                    while (i < taskList.size()) {
-
-                        taskList.get(i).setAge(1); // set age of each item in current display list to 1
-                        db.updateAge(taskList.get(i).getId(), 1); // update database items with age of 1
-
-                        taskList.get(i).setParentID(newListID); // update list items parentID
-                        db.updateParent(taskList.get(i).getId(), newListID); // attaches new entry items to parent list in DB
-
-                        i++;
-                    }
-                    // notify data set has changed for LISTS
-                    //Intent returnIntent = new Intent();
-                    //returnIntent.putExtra("result",result);
-                    //setResult(ListsActivity.RESULT_OK,returnIntent);
-                    //listsAdapter.deleteAllLists();
                     finish();
-                    //Adapter.notifyDataSetChanged();
+
                 } else {
                     // toast instead
                     Context context = getApplicationContext();
