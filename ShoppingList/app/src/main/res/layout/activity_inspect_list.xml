@@ -7,12 +7,13 @@
     tools:context=".InspectListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.ShoppingList.AppBarOverlay">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
