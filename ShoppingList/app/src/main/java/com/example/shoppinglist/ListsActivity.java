@@ -130,19 +130,6 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     private void signOut() {
         // Firebase signout
         fAuth.getInstance().signOut();
-
-        //Google client sign out
-        signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(ListsActivity.this, "You have been signed out!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), Login.class));
-                } else {
-                    Log.w(TAG, "Error signing out!");
-                }
-            }
-        });
     }
 
     // button function to move to InspectList screen
