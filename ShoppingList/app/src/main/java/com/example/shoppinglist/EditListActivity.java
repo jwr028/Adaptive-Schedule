@@ -25,7 +25,7 @@ import com.example.shoppinglist.Model.ToDoModel;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: CANNOT ADD,  FINISH BUTTON NEEDS CHANGE
+// TODO: NOTHING
 
 public class EditListActivity extends AppCompatActivity implements DialogCloseListener {
 
