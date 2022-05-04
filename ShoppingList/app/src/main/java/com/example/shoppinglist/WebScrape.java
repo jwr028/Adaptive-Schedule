@@ -99,6 +99,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
     @Override
     public void onWebScrapeClick(int position) {
         Log.d("as", "onListClick: clicked");
+        Log.d("position", "onWebScrapeClick: "+position);
         //listOfLists.get(position); // will be used to load proper info in list inspection
         //get parentID to pass to InspectActivity
         //listID = listOfLists.get(position).getId();
