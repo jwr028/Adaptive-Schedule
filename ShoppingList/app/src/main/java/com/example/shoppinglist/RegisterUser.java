@@ -77,11 +77,14 @@ public class RegisterUser extends AppCompatActivity {
                     rPassword.setError("Password is required.");
                     return;
                 }
+                if(nPassword.length() < 8){
+                    rPassword.setError("Password must be at least 8 characters");
+                    return;
+                }
                 if(TextUtils.isEmpty(nConfirmPassword)){
                     rConfirmPassword.setError("Password confirmed not filled");
                     return;
                 }
-
                 if(!nPassword.equals(nConfirmPassword)){
                     Toast.makeText(RegisterUser.this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
                     return;
