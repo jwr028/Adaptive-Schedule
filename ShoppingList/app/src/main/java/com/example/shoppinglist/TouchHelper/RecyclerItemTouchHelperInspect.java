@@ -45,8 +45,32 @@ public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallba
          String itemName = itemsAdapter.todoList.get(position).getTask();
 
         if (direction == ItemTouchHelper.LEFT) {
-            // EMPTY atm, might make an edit function
-            itemsAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+            // SWIPE LEFT
+            AlertDialog.Builder builder = new AlertDialog.Builder(itemsAdapter.getContext());
+            builder.setTitle("Specify Item");
+            builder.setMessage("Search for specific item?");
+            builder.setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // INSERT SPECIFY HERE ///////////////////////////////////////////////////////////////
+                            itemsAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+
+                            //itemName = ItemsFragment.itemList.get(position).getTask();
+                            Intent intent = new Intent(itemsAdapter.getContext(), WebScrape.class);
+                            intent.putExtra("ItemName", itemName);
+                            itemsAdapter.getContext().startActivity(intent);
+
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    itemsAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
         } else {
             // SWIPE RIGHT
@@ -65,13 +89,6 @@ public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallba
                             intent.putExtra("ItemName", itemName);
                             itemsAdapter.getContext().startActivity(intent);
 
-                            /*
-                            itemName = itemList.get(position).getTask();
-                            Intent intent = new Intent(getActivity(), WebScrape.class);
-                            intent.putExtra("ItemName", itemName);
-                            startActivity(intent);
-
-                             */
                         }
                     });
             builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -99,8 +116,8 @@ public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallba
             icon = ContextCompat.getDrawable(itemsAdapter.getContext(), R.drawable.ic_baseline_edit);
             background = new ColorDrawable(ContextCompat.getColor(itemsAdapter.getContext(), R.color.colorPrimaryDark));
         } else {
-            icon = ContextCompat.getDrawable(itemsAdapter.getContext(), R.drawable.ic_baseline_delete);
-            background = new ColorDrawable(Color.RED);
+            icon = ContextCompat.getDrawable(itemsAdapter.getContext(), R.drawable.ic_baseline_edit);
+            background = new ColorDrawable(ContextCompat.getColor(itemsAdapter.getContext(), R.color.colorPrimaryDark));
         }
 
         assert icon != null;

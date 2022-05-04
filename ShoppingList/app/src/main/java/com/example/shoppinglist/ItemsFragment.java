@@ -83,7 +83,6 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         Collections.reverse(itemList); // newest on top
         itemsAdapter.setTasks(filteredItemList);
 
-
         //GOOGLE MAPS NAV BUTTON //////////////////////////////////////////////////////////////
         Button navigation_btn = (Button) view.findViewById(R.id.launch);
 
@@ -97,7 +96,23 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
                 startActivity(chooser);
             }
         });
+        /////////////////// EDIT BUTTON ////////////////////////
+        /*
+        Button edit_btn = (Button) view.findViewById(R.id.edit);
+
+        //Button navigation_btn = getView().findViewById(R.id.launch);
+        edit_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditListActivity.class);
+                startActivity(intent);
+            }
+        });
+        
+         */
+
         ////////////////////////////////////////////////////////////////////////////////////////
+
         return view;
     }
 

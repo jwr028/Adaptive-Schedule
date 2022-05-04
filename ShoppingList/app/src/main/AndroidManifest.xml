@@ -30,6 +30,9 @@
             android:name=".CreateListActivity"
             android:exported="false" />
         <activity
+            android:name=".EditListActivity"
+            android:exported="false" />
+        <activity
             android:name=".WebScrape"
             android:exported="false" />
         <activity

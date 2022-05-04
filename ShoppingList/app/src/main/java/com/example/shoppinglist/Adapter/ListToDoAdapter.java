@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHolder> {
 
-    private List<ParentToDoModel> listOfLists;
+    public List<ParentToDoModel> listOfLists;
     private OnListListener mOnListListener;
     private DataBaseHelper db;
     private ListsActivity activity;
@@ -111,6 +111,7 @@ public class ListToDoAdapter extends RecyclerView.Adapter<ListToDoAdapter.ViewHo
         fragment.show(activity.getSupportFragmentManager(), EditListName.TAG);
 
     }
+
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

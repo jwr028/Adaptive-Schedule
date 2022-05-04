@@ -39,8 +39,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     private Button debugButton;
     //private Button specifyButton;
     TextView title;
-    private List<ParentToDoModel> listOfLists;
-
+    public List<ParentToDoModel> listOfLists;
 
     @Override
     public void onResume(){
@@ -129,11 +128,13 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     // clicking on lists
     @Override
     public void onListClick(int position){
-        //Log.d(TAG, "onListClick: clicked");
-        //listOfLists.get(position); // will be used to load proper info in list inspection
+        // Log.d(TAG, "onListClick: clicked");
+        // listOfLists.get(position); // will be used to load proper info in list inspection
         // get parentID to pass to InspectActivity
         listID = listOfLists.get(position).getId();
         Intent intent = new Intent(this, InspectListActivity.class);
+
+
         intent.putExtra("listID",listID);
         startActivity(intent);
     }

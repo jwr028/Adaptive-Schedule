@@ -15,29 +15,33 @@ import android.widget.Toast;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
-import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelper;
+import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelperEdit;
 import com.example.shoppinglist.Utils.DataBaseHelper;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import com.example.shoppinglist.Adapter.ToDoAdapter;
+import com.example.shoppinglist.Adapter.EditAdapter;
 import com.example.shoppinglist.Model.ToDoModel;
 
 import java.util.Collections;
 import java.util.List;
 
-public class CreateListActivity extends AppCompatActivity implements DialogCloseListener{
+// TODO: CANNOT ADD,  FINISH BUTTON NEEDS CHANGE
+
+public class EditListActivity extends AppCompatActivity implements DialogCloseListener {
 
     private DataBaseHelper db;
 
     private RecyclerView tasksRecyclerView;
-    private ToDoAdapter tasksAdapter;
+    private EditAdapter tasksAdapter;
     private ListToDoAdapter listsAdapter;
     public TextView listName;
     private ExtendedFloatingActionButton addTaskButton;
     private ExtendedFloatingActionButton addItemButton;
     private Button finishButton;
 
-    //for toast
+    // extras
+    public int listID;
+    public String listNameEx;
 
 
     private List<ToDoModel> taskList;
@@ -45,18 +49,25 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_list);
+        setContentView(R.layout.activity_edit_list);
+
+        // EXTRAAAAAAAAAAS
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            listID = extras.getInt("listID");
+            listNameEx = extras.getString("listName");
+        }
 
         db = new DataBaseHelper(this);
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        tasksAdapter = new ToDoAdapter(db,CreateListActivity.this);
+        tasksAdapter = new EditAdapter(db, EditListActivity.this);
         tasksRecyclerView.setAdapter(tasksAdapter);
 
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelperEdit(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         addTaskButton = findViewById(R.id.addTask);
@@ -64,17 +75,23 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
         listName = findViewById(R.id.listName);
         finishButton = findViewById(R.id.finishButton);
 
-        // fetches items and displays them
-        taskList = db.getAllNewTasks();
+        // set listName text to match
+        // listName = listNameEx
+        listName.setText(listNameEx);
+
+        // need to put in EXTRA for ID
+        taskList = db.getAllTasks(listID);
         Collections.reverse(taskList); // newest on top
         tasksAdapter.setTasks(taskList);
+
 
         // ADD TASK BUTTON FUNCTION
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                AddNewTaskEdit.newInstance().show(getSupportFragmentManager(), AddNewTaskEdit.TAG);
+                // THESE NEED NEW INSTANCES (AddNewTaskEdit)
 
             }
         });
@@ -84,7 +101,8 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
             @Override
             public void onClick(View v) {
                 // duplicated the code for new task to separate new task and item
-                AddNewItem.newInstance().show(getSupportFragmentManager(), AddNewItem.TAG);
+                AddNewItemEdit.newInstance().show(getSupportFragmentManager(), AddNewItemEdit.TAG);
+                // replace with AddNewItemEdit
 
             }
         });
@@ -94,7 +112,7 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
             @Override
             public void onClick(View v) {
                 // duplicated the code for new task to separate new task and item
-                AddNewName.newInstance().show(getSupportFragmentManager(), AddNewName.TAG);
+                AddNewNameEdit.newInstance().show(getSupportFragmentManager(), AddNewNameEdit.TAG);
 
             }
         });
@@ -104,40 +122,19 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
             @Override
             public void onClick(View v) {
 
+                // EDIT version of this function just updates name of list instead of creating new one
+
+
                 // prevent creating empty list
-                if (tasksAdapter.getItemCount() != 0){
+                if (tasksAdapter.getItemCount() != 0) {
                     // need code here to add LIST NAME to parent database before finishing and returning to List Activity screen
                     String text = listName.getText().toString(); // fetches TextView and sets as name in database
 
-                    // inserting a new list
-                    ParentToDoModel list = new ParentToDoModel();
-                    // inserting the info for database
-                    list.setName(text);
+                    // update list name with what is currently in the top textview
+                    db.updateListName(listID,text);
 
-                    db.insertList(list);
-                    // need to pull ID here?
-                    // need to set ID of new list to parentID of all list items currently displayed
-                    //int newListID = list.getId(); // THIS IS SETTING to 0 FOR SOME REASON!!!
-                    int newListID = db.getLastInsert(); // method uses last_insert_rowid in SQlite
-
-                    int i = 0;
-                    while (i < taskList.size()){
-
-                        taskList.get(i).setAge(1); // set age of each item in current display list to 1
-                        db.updateAge(taskList.get(i).getId(),1); // update database items with age of 1
-
-                        taskList.get(i).setParentID(newListID); // update list items parentID
-                        db.updateParent(taskList.get(i).getId(),newListID); // attaches new entry items to parent list in DB
-
-                        i++;
-                    }
-                    // notify data set has changed for LISTS
-                    //Intent returnIntent = new Intent();
-                    //returnIntent.putExtra("result",result);
-                    //setResult(ListsActivity.RESULT_OK,returnIntent);
-                    //listsAdapter.deleteAllLists();
                     finish();
-                    //Adapter.notifyDataSetChanged();
+
                 } else {
                     // toast instead
                     Context context = getApplicationContext();
@@ -150,7 +147,6 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
             }
         });
-
 
     }
 
@@ -171,9 +167,18 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
      */
 
     @Override
-    public void handleDialogClose(DialogInterface dialog){
+    public void handleDialogClose(DialogInterface dialog) {
+        /*
         taskList = db.getAllNewTasks(); // needs to be getAllNEWTasks
         Collections.reverse(taskList);
+        tasksAdapter.setTasks(taskList);
+        tasksAdapter.notifyDataSetChanged();
+
+         */
+
+        // this needs to be alltasksoflistID
+        taskList = db.getAllTasks(listID);
+        Collections.reverse(taskList); // newest on top
         tasksAdapter.setTasks(taskList);
         tasksAdapter.notifyDataSetChanged();
     }

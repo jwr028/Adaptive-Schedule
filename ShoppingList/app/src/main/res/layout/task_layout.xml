@@ -10,25 +10,29 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
         android:background="@color/teal_light"
-        android:padding="8dp">
+        >
         <!-- Removing checkbox for initial createlist Items -->
         <CheckBox
             android:id="@+id/todoCheckBox"
-            android:layout_width="294dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginLeft="-10dp"
-            android:buttonTint="@android:color/holo_blue_dark"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="79dp"
+
+            android:buttonTint="@android:color/holo_blue_light"
             android:gravity="center"
-
             android:layoutDirection="rtl"
-
             android:paddingStart="8dp"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            tools:text="Stuff to do goes here."
+            tools:text="Stuff to get goes here."
             tools:textSize="12sp" />
 
     </RelativeLayout>

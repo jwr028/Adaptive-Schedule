@@ -3,7 +3,8 @@ package com.example.shoppinglist.Model;
 // holds info for list objects
 
 public class ToDoModel {
-    private int id, parentID, status, age;
+    private int id, parentID, status;
+    private int age = 0;
     private String task; // entry text
     private String type; // for distinguishing between shop items and tasks
     private String storeItemID;

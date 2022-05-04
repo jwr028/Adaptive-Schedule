@@ -86,7 +86,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COL_TASK, task.getTask());
         cv.put(COL_STATUS, 0); // for checkbox
         cv.put(COL_TYPE, task.getType());
-        cv.put(COL_AGE, 0); // for distinguishing new items from items already stored
+        cv.put(COL_AGE, task.getAge()); // for distinguishing new items from items already stored
         cv.put(COL_STOREITEMID, task.getStoreItemID());
 
         long insert = db.insert(TABLE_NAME, null, cv);
@@ -227,12 +227,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     // used to fetch all items and tasks in a list (probably not used)
-    public List<ToDoModel> getAllTasks(){
+    public List<ToDoModel> getAllTasks(int id){
 
         List<ToDoModel> taskList = new ArrayList<>();
 
         // get data from database
-        String queryString = "SELECT * FROM " + TABLE_NAME; // will need to add on parent ID filter later !!!!!!!!!!!!!!
+        String queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " + PARENT_ID + "=" + id; // will need to add on parent ID filter later !!!!!!!!!!!!!!
         SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
 
         Cursor cursor = db.rawQuery(queryString,null);

@@ -1,0 +1,150 @@
+package com.example.shoppinglist;
+
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import com.example.shoppinglist.Utils.DataBaseHelper;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import com.example.shoppinglist.Adapter.ToDoAdapter;
+import com.example.shoppinglist.Model.ToDoModel;
+import com.example.shoppinglist.Utils.DatabaseHandler;
+
+import java.util.Objects;
+
+public class AddNewTaskEdit extends BottomSheetDialogFragment {
+
+    public static final String TAG = "ActionBottomDialog";
+    private EditText newTaskText;
+    private Button newTaskSaveButton;
+
+    private DataBaseHelper db;
+
+    public static AddNewTaskEdit newInstance(){
+        return new AddNewTaskEdit();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(STYLE_NORMAL, R.style.DialogStyle);
+
+        //extras?
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.new_task, container, false);
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.newTaskText);
+        newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
+
+        boolean isUpdate = false;
+
+        final Bundle bundle = getArguments();
+        if(bundle != null){
+            isUpdate = true;
+            String task = bundle.getString("task");
+            newTaskText.setText(task);
+            assert task != null;
+            if(task.length()>0)
+                newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorBlue));
+        }
+
+        newTaskSaveButton.setEnabled(false);
+
+        db = new DataBaseHelper(getActivity());
+        db.openDatabase();
+
+        // code to enable and change save button color when task has text entered
+        newTaskText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if(s.toString().trim().equals("")){
+                    newTaskSaveButton.setEnabled(false);
+                    newTaskSaveButton.setTextColor(Color.GRAY);
+                }
+                else{
+                    newTaskSaveButton.setEnabled(true);
+                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorBlue));
+                }
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().trim().equals("")){
+                    newTaskSaveButton.setEnabled(false);
+                    newTaskSaveButton.setTextColor(Color.GRAY);
+                }
+                else{
+                    newTaskSaveButton.setEnabled(true);
+                    newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorBlue));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // EDITING AN ENTRY
+        final boolean finalIsUpdate = isUpdate;
+        newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = newTaskText.getText().toString();
+                // updating a task
+                if(finalIsUpdate){
+                    db.updateTask(bundle.getInt("id"), text);
+                }
+                // inserting a new task
+                else {
+                    ToDoModel task = new ToDoModel();
+                    // inserting the info for database
+                    task.setTask(text);
+                    task.setStatus(0);
+                    task.setType("task"); //used to distinguish items and tasks
+
+                    // need to set parent of new item so it appears in list
+                    task.setParentID(((EditListActivity)getActivity()).listID);
+                    task.setAge(1);
+
+                    db.insertTask(task);
+                }
+                dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog){
+        Activity activity = getActivity();
+        if(activity instanceof DialogCloseListener)
+            ((DialogCloseListener)activity).handleDialogClose(dialog);
+    }
+}

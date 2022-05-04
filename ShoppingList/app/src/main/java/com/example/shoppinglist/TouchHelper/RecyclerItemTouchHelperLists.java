@@ -2,10 +2,12 @@ package com.example.shoppinglist.TouchHelper;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,13 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Adapter.ToDoAdapter;
+import com.example.shoppinglist.EditListActivity;
 import com.example.shoppinglist.R;
+import com.example.shoppinglist.WebScrape;
 
 // class used for handling swiping on main list activity
 public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback {
 
     //private ToDoAdapter adapter;
-    private ListToDoAdapter listAdapter;
+    public ListToDoAdapter listAdapter;
 
     //public RecyclerItemTouchHelper(ToDoAdapter adapter) {
     //    super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
@@ -42,6 +46,9 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
     @Override
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
         final int position = viewHolder.getAdapterPosition();
+        int listID = listAdapter.listOfLists.get(position).getId();
+        String listName = listAdapter.listOfLists.get(position).getName();
+
         if (direction == ItemTouchHelper.LEFT) {
             AlertDialog.Builder builder = new AlertDialog.Builder(listAdapter.getContext());
             builder.setTitle("Delete Task");
@@ -62,7 +69,38 @@ public class RecyclerItemTouchHelperLists extends ItemTouchHelper.SimpleCallback
             AlertDialog dialog = builder.create();
             dialog.show();
         } else {
-            listAdapter.editNameOfList(position);
+            //listAdapter.editNameOfList(position);
+            // bring to editlist instead?
+            // SWIPE RIGHT
+            AlertDialog.Builder builder = new AlertDialog.Builder(listAdapter.getContext());
+            builder.setTitle("Edit List");
+            builder.setMessage("Edit this List?");
+            builder.setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+
+                            //itemName = ItemsFragment.itemList.get(position).getTask();
+                            Intent intent = new Intent(listAdapter.getContext(), EditListActivity.class);
+                            Bundle extras = new Bundle();
+                            extras.putInt("listID",listID);
+                            extras.putString("listName",listName);
+                            intent.putExtras(extras);
+                            //intent.putExtra("listID", listID);
+                            listAdapter.getContext().startActivity(intent);
+
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
