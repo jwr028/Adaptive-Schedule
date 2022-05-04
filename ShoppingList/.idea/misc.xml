@@ -67,6 +67,7 @@
         <entry key="app/src/main/res/layout/header.xml" value="0.1" />
         <entry key="app/src/main/res/layout/login.xml" value="0.16576086956521738" />
         <entry key="app/src/main/res/layout/register_user.xml" value="0.10260416666666666" />
+        <entry key="app/src/main/res/layout/reset_password.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/layout/user_profile.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_profile.xml" value="0.11041666666666666" />
       </map>

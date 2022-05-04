@@ -1,18 +1,22 @@
 package com.example.shoppinglist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -50,6 +54,8 @@ public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     private FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    AlertDialog.Builder reset_alert;
+    LayoutInflater reset_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -59,7 +65,10 @@ public class Login extends AppCompatActivity {
         TextView username = (TextView) findViewById(R.id.userEmail);
         TextView password = (TextView) findViewById(R.id.userPassword);
         TextView startRegister = (TextView) findViewById(R.id.newRegister);
+        TextView forgotPassword = (TextView)  findViewById(R.id.ForgotPassword);
         MaterialButton loginbtn = (MaterialButton) findViewById(R.id.btn_login);
+        reset_password = this.getLayoutInflater();
+        reset_alert = new AlertDialog.Builder(this);
         fAuth = FirebaseAuth.getInstance();
         signInGoogle = findViewById(R.id.googleSignIn);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -104,6 +113,40 @@ public class Login extends AppCompatActivity {
                 }
             });
 
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View v = reset_password.inflate(R.layout.reset_password, null);
+                reset_alert.setTitle("Reset Password")
+                        .setMessage("Please enter your email")
+                        .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                EditText email = v.findViewById(R.id.resetEmailPassword);
+                                String rEmail = email.getText().toString().trim();
+                                if(rEmail.isEmpty()){
+                                    email.setError("Email is required");
+                                    return;
+                                }
+                                fAuth.sendPasswordResetEmail(rEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(Login.this, "Password Reset has been sent.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        }).setNegativeButton("Cancel", null)
+                        .setView(v)
+                        .create().show();
+            }
         });
 
         loginBypass = findViewById(R.id.loginBypass);

@@ -1,5 +1,6 @@
 package com.example.shoppinglist;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,19 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.shoppinglist.Adapter.ListToDoAdapter;
 import com.example.shoppinglist.Model.ParentToDoModel;
 import com.example.shoppinglist.TouchHelper.RecyclerItemTouchHelperLists;
 import com.example.shoppinglist.Utils.DataBaseHelper;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +47,11 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
     //private Button specifyButton;
     TextView title;
     private List<ParentToDoModel> listOfLists;
+
+    Button logout;
+    private FirebaseAuth fAuth;
+    private static final String TAG = "ListsActivity";
+    GoogleSignInClient signInClient;
 
 
     @Override
@@ -60,6 +72,7 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         
         listsRecyclerView = findViewById(R.id.listsRecyclerView);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        logout = findViewById(R.id.user_logout);
 
         listsAdapter = new ListToDoAdapter(db,ListsActivity.this, this);
         listsRecyclerView.setAdapter(listsAdapter);
@@ -94,6 +107,13 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
             }
         });
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+                startActivity(new Intent(getApplicationContext(), Login.class));
+            }
+        });
         /*
         specifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +125,24 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
 
          */
 
+    }
+
+    private void signOut() {
+        // Firebase signout
+        fAuth.getInstance().signOut();
+
+        //Google client sign out
+        signInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(ListsActivity.this, "You have been signed out!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Login.class));
+                } else {
+                    Log.w(TAG, "Error signing out!");
+                }
+            }
+        });
     }
 
     // button function to move to InspectList screen
