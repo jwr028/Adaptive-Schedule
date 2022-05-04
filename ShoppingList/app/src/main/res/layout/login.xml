@@ -19,11 +19,11 @@
 
     <TextView
         android:id="@+id/SWLE"
-        android:layout_width="236dp"
-        android:layout_height="49dp"
+        android:layout_width="253dp"
+        android:layout_height="67dp"
         android:text="@string/title"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textSize="42dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -63,9 +63,10 @@
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintTop_toBottomOf="@+id/userEmail"
+        app:layout_constraintVertical_bias="0.084" />
 
     <TextView
         android:id="@+id/newRegister"
@@ -88,10 +89,10 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.586" />
+        app:layout_constraintTop_toBottomOf="@+id/userPassword"
+        app:layout_constraintVertical_bias="0.026" />
 
     <Button
         android:id="@+id/loginBypass"
@@ -106,14 +107,14 @@
         app:layout_constraintVertical_bias="0.942" />
 
     <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.952"
-        android:id="@+id/googleSignIn"/>
+        app:layout_constraintVertical_bias="0.952" />
 
     <TextView
         android:id="@+id/OptionalSignIns"
