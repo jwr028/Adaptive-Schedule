@@ -86,7 +86,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COL_TASK, task.getTask());
         cv.put(COL_STATUS, 0); // for checkbox
         cv.put(COL_TYPE, task.getType());
-        cv.put(COL_AGE, 0); // for distinguishing new items from items already stored
+        cv.put(COL_AGE, task.getAge()); // for distinguishing new items from items already stored
         cv.put(COL_STOREITEMID, task.getStoreItemID());
 
         long insert = db.insert(TABLE_NAME, null, cv);
