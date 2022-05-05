@@ -30,6 +30,8 @@ import java.util.List;
 public class ListsActivity extends AppCompatActivity implements DialogCloseListener, ListToDoAdapter.OnListListener {
 
     private int listID; // used for passing to inspectList
+    private String listName;
+
     private DataBaseHelper db;
 
     private RecyclerView listsRecyclerView;
@@ -132,10 +134,13 @@ public class ListsActivity extends AppCompatActivity implements DialogCloseListe
         // listOfLists.get(position); // will be used to load proper info in list inspection
         // get parentID to pass to InspectActivity
         listID = listOfLists.get(position).getId();
+        listName = listOfLists.get(position).getName();
         Intent intent = new Intent(this, InspectListActivity.class);
-
-
-        intent.putExtra("listID",listID);
+        Bundle extras = new Bundle();
+        extras.putInt("listID",listID);
+        extras.putString("listName",listName);
+        //intent.putExtra("listID",listID);
+        intent.putExtras(extras);
         startActivity(intent);
     }
 

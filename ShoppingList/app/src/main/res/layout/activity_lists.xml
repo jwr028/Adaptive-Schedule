@@ -70,6 +70,17 @@
         android:layout_marginBottom="122dp"
         android:text="Swipe a list to edit or delete." />
 
+    <!--<Button
+        android:id="@+id/user_logout"
+        android:layout_width="119dp"
+        android:layout_height="63dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="277dp"
+        android:layout_marginBottom="62dp"
+        android:text="Logout" />
+    -->
+
     <!--
     <Button
         android:id="@+id/specifyButton"
