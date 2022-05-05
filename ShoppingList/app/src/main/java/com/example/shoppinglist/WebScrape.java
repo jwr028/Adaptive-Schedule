@@ -45,7 +45,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         if (extras != null){
             itemName = extras.getString("ItemName");
             Log.d("!!!item name at extras ", itemName.toString());
-            int itemID = extras.getInt("itemID");
+            itemID = extras.getInt("itemID");
             Log.d("!!!item ID at extras ", itemID + "");
         } else{
             itemName = "milk";

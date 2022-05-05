@@ -46,6 +46,7 @@ public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallba
         final int position = viewHolder.getAdapterPosition();
         String itemName = itemsAdapter.todoList.get(position).getTask();
         int itemID = itemsAdapter.todoList.get(position).getId();
+
         Log.d("itemID prescrape ", itemID + "");
         if (direction == ItemTouchHelper.LEFT) {
             // SWIPE LEFT
@@ -95,7 +96,12 @@ public class RecyclerItemTouchHelperInspect extends ItemTouchHelper.SimpleCallba
 
                             //itemName = ItemsFragment.itemList.get(position).getTask();
                             Intent intent = new Intent(itemsAdapter.getContext(), WebScrape.class);
-                            intent.putExtra("ItemName", itemName);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ItemName",itemName);
+                            bundle.putInt("itemID",itemID);
+                            intent.putExtras(bundle);
+
+                            Log.d("item name pre scrape ", itemName.toString());
                             itemsAdapter.getContext().startActivity(intent);
 
                         }
