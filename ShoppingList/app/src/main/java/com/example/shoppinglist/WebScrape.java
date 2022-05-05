@@ -24,9 +24,11 @@ import java.util.ArrayList;
 
 public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener {
 
+
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
     private String itemName;
+    private int itemID;
     private String itemURL;
     private String nameOfItem;
 
@@ -42,8 +44,12 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             itemName = extras.getString("ItemName");
+            Log.d("!!!item name at extras ", itemName.toString());
+            int itemID = extras.getInt("itemID");
+            Log.d("!!!item ID at extras ", itemID + "");
         } else{
             itemName = "milk";
+            itemID = 69;
         }
 
         description_webscrape dw = new description_webscrape();
@@ -106,10 +112,10 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         itemURL = list.get(position).getImageURL();
         //Log.d("item name", nameOfItem.toString());
         //Log.d("item URL", itemURL.toString());
-        Intent intent = new Intent(this, PlaceholderActivity.class);
-        intent.putExtra("itemName",nameOfItem);
-        intent.putExtra("itemURL", itemURL);
-        startActivity(intent);
+        //Intent intent = new Intent(this, PlaceholderActivity.class);
+        //intent.putExtra("itemName",nameOfItem);
+        //intent.putExtra("itemURL", itemURL);
+        //startActivity(intent);
     }
 
 
