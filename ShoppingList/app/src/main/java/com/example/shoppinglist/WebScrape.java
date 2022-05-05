@@ -22,17 +22,17 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener{
+public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener {
 
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
     private String itemName;
-    WebScrape thisVal = this;
+    private String itemURL;
+    private String nameOfItem;
 
-    private Button nextPage;
-    private Button previousPage;
     private int page = 1;
     ArrayList<WebScrapeItem> list = new ArrayList<>();
+    private boolean executing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,34 +49,32 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         description_webscrape dw = new description_webscrape();
         dw.execute();
 
-        ArrayList<WebScrapeItem> recyclerViewWeb;
-        recyclerViewWeb = list;
-
-        thisVal.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+        this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
-        adapter = new WebScrapeAdapter(recyclerViewWeb, this);
+        //adapter = new WebScrapeAdapter(recyclerViewWeb);
         this.recyclerViewWeb.setAdapter(adapter);
 
 
-        nextPage = findViewById(R.id.nextPage);
+        Button nextPage = findViewById(R.id.nextPage);
         nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                page++;
-                list.clear();
-                description_webscrape aw = new description_webscrape();
-                aw.execute();
-
+                if (!executing) {
+                    page++;
+                    list.clear();
+                    description_webscrape aw = new description_webscrape();
+                    aw.execute();
+                }
             }
         });
 
-        previousPage = findViewById(R.id.previousPage);
+        Button previousPage = findViewById(R.id.previousPage);
         previousPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (page != 1) {
+                if (page != 1 && !executing) {
                     page--;
                     list.clear();
                     description_webscrape aw = new description_webscrape();
@@ -87,38 +85,32 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         });
     }
 
+    public void WebScrapeDone() {
+        Log.d("Text", String.valueOf(list.size()));
+        //Log.d("Text", list.toString());
+        this.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        this.recyclerViewWeb.setLayoutManager(mLayoutManager);
 
-    //clicking on WebScrapes
-    @Override
-    public void onWebScrapeClick(int position) {
-        //Log.d(TAG, "onListClick: clicked");
-        //listOfLists.get(position); // will be used to load proper info in list inspection
-        // get parentID to pass to InspectActivity
-        //listID = listOfLists.get(position).getId();
-        Intent intent = new Intent(this, PlaceholderActivity.class);
-        //intent.putExtra("listID",listID);
-        startActivity(intent);
+        // im not sure how to access the onWebScrape from here
+        adapter = new WebScrapeAdapter(list, this);
+        this.recyclerViewWeb.setAdapter(adapter);
+        executing = false;
     }
 
-
-    /*private ArrayList<WebScrapeItem> initCities() {
-        ArrayList<WebScrapeItem> list = new ArrayList<>();
-
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Cinque Terre", "https://bit.ly/CBImageCinque"));
-        list.add(new WebScrapeItem("Paris", "https://bit.ly/CBImageParis"));
-        list.add(new WebScrapeItem("Rio de Janeiro", "https://bit.ly/CBImageRio"));
-        list.add(new WebScrapeItem("Sydney", "https://bit.ly/CBImageRio"));
-
-        return list;
-    }*/
+    @Override
+    public void onWebScrapeClick(int position) {
+        //listOfLists.get(position); // will be used to load proper info in list inspection
+        //get parentID to pass to InspectActivity
+        nameOfItem = list.get(position).getItemName();
+        itemURL = list.get(position).getImageURL();
+        //Log.d("item name", nameOfItem.toString());
+        //Log.d("item URL", itemURL.toString());
+        Intent intent = new Intent(this, PlaceholderActivity.class);
+        intent.putExtra("itemName",nameOfItem);
+        intent.putExtra("itemURL", itemURL);
+        startActivity(intent);
+    }
 
 
     private class description_webscrape extends AsyncTask<Void, Void, Void> {
@@ -126,6 +118,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            executing = true;
         }
 
         @Override
@@ -134,6 +127,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
             org.jsoup.nodes.Document document = null;
             org.jsoup.select.Elements elementsText;
             org.jsoup.select.Elements elementsImage;
+            org.jsoup.select.Elements elementsID;
 
             String url = null;
             if (page == 1){
@@ -147,8 +141,13 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            assert document != null;
             elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
             elementsImage = document.getElementsByClass("absolute top-0 left-0");
+            //elementsID = document.getElementsByClass("sans-serif mid-gray relative flex flex-column w-100 ");
+            //elementsID = document.getElementsByTag("data-item-id");
+            //elementsID = document.getElementsByAttribute("data-item-id");
 
             int i = 0;
             Log.d("size", String.valueOf(elementsText.size()));
@@ -157,6 +156,7 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
                 list.add(new WebScrapeItem(elementsText.eq(i).text(), elementsImage.eq(i).attr("src")));
                 Log.d("Text", elementsText.eq(i).text());
                 Log.d("Image", elementsImage.eq(i).attr("src"));
+                //Log.d("id", elementsID.eq(i).attr("data-item-id"));
                 Log.d("Placeholder", " ");
                 i++;
             }
@@ -165,37 +165,10 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
 
         @Override
         protected void onPostExecute(Void aVoid) {
-
-            Log.d("Text", String.valueOf(list.size()));
-            //Log.d("Text", list.toString());
-            thisVal.recyclerViewWeb = (RecyclerView) findViewById(R.id.recyclerViewWeb);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(thisVal);
-            thisVal.recyclerViewWeb.setLayoutManager(mLayoutManager);
-
-            // im not sure how to access the onWebScrape from here
-            //adapter = new WebScrapeAdapter(list, this);
-            thisVal.recyclerViewWeb.setAdapter(adapter);
+            WebScrapeDone();
         }
 
     }
 
-    /*public String Scrape(){
-        org.jsoup.nodes.Document document = null;
-        String url = null;
-        if (page == 1){
-            url = String.format("https://www.walmart.com/search?q=%s&affinityOverride=store_led",item);
-        } else {
-            url = String.format("https://www.walmart.com/search?q=%s&affinityOverride=store_led&page=%d",item, page);
-        }
-
-        try {
-            document = Jsoup.connect(url).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        org.jsoup.select.Elements elementsText = document.getElementsByClass("f6 f5-l normal dark-gray mb0 mt1 lh-title");
-        org.jsoup.select.Elements elementsImage = document.getElementsByClass("absolute top-0 left-0");
-        return elementsText.text();
-    }*/
 }
 
