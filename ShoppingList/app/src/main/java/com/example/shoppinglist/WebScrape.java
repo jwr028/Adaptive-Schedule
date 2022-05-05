@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.Adapter.WebScrapeAdapter;
 import com.example.shoppinglist.Model.WebScrapeItem;
+import com.example.shoppinglist.Utils.DataBaseHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnWebScrapeListener {
 
+    private DataBaseHelper db;
 
     public RecyclerView recyclerViewWeb;
     private RecyclerView.Adapter adapter;
@@ -51,6 +53,8 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
             itemName = "milk";
             itemID = 69;
         }
+
+        db = new DataBaseHelper(this);
 
         description_webscrape dw = new description_webscrape();
         dw.execute();
@@ -116,6 +120,15 @@ public class WebScrape extends AppCompatActivity implements WebScrapeAdapter.OnW
         //intent.putExtra("itemName",nameOfItem);
         //intent.putExtra("itemURL", itemURL);
         //startActivity(intent);
+        // make changes to database and finish activity
+
+        // db update task
+        db.updateTask(itemID,nameOfItem);
+
+        // db update storeItemID
+        db.updateStoreItemID(itemID,itemURL);
+
+        finish();
     }
 
 

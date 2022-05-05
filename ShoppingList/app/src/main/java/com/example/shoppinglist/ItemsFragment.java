@@ -2,6 +2,7 @@ package com.example.shoppinglist;
 
 import static com.example.shoppinglist.AddNewItem.TAG;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,9 +31,9 @@ import java.util.List;
 import android.content.Intent;
 import android.widget.Button;
 
-// ITEMS TAB OF INSPECTLIST ACTIVITY
+// ITEMS TAB OF INSPECT LIST ACTIVITY
 
-public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnItemListener {
+public class ItemsFragment extends Fragment implements DialogCloseListener,InspectItemsAdapter.OnItemListener {
 
     private DataBaseHelper db;
     private RecyclerView itemsRecyclerView;
@@ -43,6 +44,27 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
     public InspectListActivity inspectListActivity;
     private String itemName;
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        itemList = db.getAllListItems();
+        filteredItemList = new ArrayList<>();
+        // iterate through itemList and get only items that match parent ID
+        int i = 0;
+        while (i < itemList.size()){
+            if (itemList.get(i).getParentID() == inspectListActivity.listID){
+                filteredItemList.add(itemList.get(i)); // add item to filtered list if belongs to correct parent
+            }
+            i++;
+        }
+
+
+
+        getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +87,8 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         // DECLARATIONS FOR SWIPING
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelperInspect(itemsAdapter));
         itemTouchHelper.attachToRecyclerView(itemsRecyclerView);
+
+        ////////////////////////////////////////// POPULATE
 
         // fetches items and displays them
         // needs to be unique function that is only ITEMS of SELECTED LIST
@@ -96,22 +120,8 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
                 startActivity(chooser);
             }
         });
-        /////////////////// EDIT BUTTON ////////////////////////
-        /*
-        Button edit_btn = (Button) view.findViewById(R.id.edit);
 
-        //Button navigation_btn = getView().findViewById(R.id.launch);
-        edit_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EditListActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-         */
 
-        ////////////////////////////////////////////////////////////////////////////////////////
 
         return view;
     }
@@ -129,4 +139,26 @@ public class ItemsFragment extends Fragment implements InspectItemsAdapter.OnIte
         intent.putExtra("ItemName", itemName);
         startActivity(intent);
     }
+
+    @Override
+    public void handleDialogClose(DialogInterface dialog){
+
+        itemList = db.getAllListItems();
+        filteredItemList = new ArrayList<>();
+        // iterate through itemList and get only items that match parent ID
+        int i = 0;
+        while (i < itemList.size()){
+            if (itemList.get(i).getParentID() == inspectListActivity.listID){
+                filteredItemList.add(itemList.get(i)); // add item to filtered list if belongs to correct parent
+            }
+            i++;
+        }
+
+        Collections.reverse(itemList); // newest on top
+        itemsAdapter.setTasks(filteredItemList);
+
+
+    }
+
+
 }

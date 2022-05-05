@@ -333,6 +333,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, cv, COL_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
+    public void updateStoreItemID(int id, String storeItemID) {
+        ContentValues cv = new ContentValues();
+        cv.put(COL_STOREITEMID, storeItemID);
+        db.update(TABLE_NAME, cv, COL_ID + "= ?", new String[] {String.valueOf(id)});
+    }
+
     public void updateAge(int id, int age) {
         ContentValues cv = new ContentValues();
         cv.put(COL_AGE, age);

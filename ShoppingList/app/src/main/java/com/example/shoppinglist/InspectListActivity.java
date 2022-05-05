@@ -1,5 +1,6 @@
 package com.example.shoppinglist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 import com.example.shoppinglist.ui.main.SectionsPagerAdapter;
 import com.example.shoppinglist.databinding.ActivityInspectListBinding;
 
-public class InspectListActivity extends AppCompatActivity {
+public class InspectListActivity extends AppCompatActivity implements DialogCloseListener {
 
     private ActivityInspectListBinding binding;
     public int listID;
@@ -30,6 +32,15 @@ public class InspectListActivity extends AppCompatActivity {
     public TextView activityTitle;
 
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +73,15 @@ public class InspectListActivity extends AppCompatActivity {
 
     }
 
+
+
+    @Override
+    public void handleDialogClose(DialogInterface dialog){
+        //Log.d("thing","thingy");
+        //listOfLists = db.getAllLists(); // refreshing Lists from database
+        //Collections.reverse(listOfLists);
+        //listsAdapter.setLists(listOfLists);
+        //listsAdapter.notifyDataSetChanged();
+    }
 
 }
