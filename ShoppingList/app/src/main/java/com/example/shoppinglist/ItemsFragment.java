@@ -45,26 +45,7 @@ public class ItemsFragment extends Fragment implements DialogCloseListener,Inspe
     private String itemName;
 
 
-    @Override
-    public void onResume(){
-        super.onResume();
 
-        itemList = db.getAllListItems();
-        filteredItemList = new ArrayList<>();
-        // iterate through itemList and get only items that match parent ID
-        int i = 0;
-        while (i < itemList.size()){
-            if (itemList.get(i).getParentID() == inspectListActivity.listID){
-                filteredItemList.add(itemList.get(i)); // add item to filtered list if belongs to correct parent
-            }
-            i++;
-        }
-
-
-
-        getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -124,6 +105,10 @@ public class ItemsFragment extends Fragment implements DialogCloseListener,Inspe
 
 
         return view;
+    }
+
+    public void restartActivity(){
+        //Intent intent = getIntent();
     }
 
     // clicking on items (has placeholder)

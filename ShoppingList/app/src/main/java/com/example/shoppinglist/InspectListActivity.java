@@ -32,13 +32,11 @@ public class InspectListActivity extends AppCompatActivity implements DialogClos
     public TextView activityTitle;
 
 
-
+    // attempt to refresh activity
     @Override
-    public void onResume(){
-        super.onResume();
-
-
-
+    public void onRestart(){
+        super.onRestart();
+        this.recreate();
 
     }
 
