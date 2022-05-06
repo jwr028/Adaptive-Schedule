@@ -45,8 +45,6 @@ public class ItemsFragment extends Fragment implements DialogCloseListener,Inspe
     private String itemName;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -102,14 +100,9 @@ public class ItemsFragment extends Fragment implements DialogCloseListener,Inspe
             }
         });
 
-
-
         return view;
     }
 
-    public void restartActivity(){
-        //Intent intent = getIntent();
-    }
 
     // clicking on items (has placeholder)
     // this is gonna be overridden by checkbox

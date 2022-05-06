@@ -39,7 +39,6 @@ public class CreateListActivity extends AppCompatActivity implements DialogClose
 
     //for toast
 
-
     private List<ToDoModel> taskList;
 
     @Override

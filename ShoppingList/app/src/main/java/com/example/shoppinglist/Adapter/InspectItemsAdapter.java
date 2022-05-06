@@ -46,11 +46,14 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
     // override of viewtype needed to display different color layout for respective type of entry
     @Override //add this method to your adapter
     public int getItemViewType(int position) {
+        // update store id here?
+
         final ToDoModel item = todoList.get(position);
-        if(item.getType().toString().equals("task")){
-            return 1; // blue layout
+        item.getId();
+
+        if(db.getStoreItemID(item.getId()) == null){
+            return 1; // lighter green layout
         }else{
-            //System.out.println(); lol
             return 2; // green layout
         }
     }
@@ -71,7 +74,7 @@ public class InspectItemsAdapter extends RecyclerView.Adapter<InspectItemsAdapte
             return new ViewHolder(itemView,mOnItemListener);
         }
         else {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout_specified, parent, false);
 
             // declaration for onclick listener
             checkBox = itemView.findViewById(R.id.itemCheckbox);

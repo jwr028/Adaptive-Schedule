@@ -339,6 +339,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, cv, COL_ID + "= ?", new String[] {String.valueOf(id)});
     }
 
+
+    public String getStoreItemID(int ID){
+        String queryString = "SELECT " +COL_STOREITEMID+ " FROM " +TABLE_NAME+ " WHERE " +COL_ID+ "=" +ID;
+        //SQLiteDatabase db = this.getReadableDatabase(); // command to open database for reading
+
+        Cursor cursor = db.rawQuery(queryString,null);
+
+        if (cursor.moveToFirst()) {
+            // loop through results and create new objects then return them as list
+            do {
+                String storeID = cursor.getString(0);
+
+                return storeID;
+            } while(cursor.moveToNext());
+        }
+        else {
+            // failure, don't add anything
+            return null;
+        }
+
+
+        //Cursor cursor = db.rawQuery(queryString,null);
+    }
+
     public void updateAge(int id, int age) {
         ContentValues cv = new ContentValues();
         cv.put(COL_AGE, age);
